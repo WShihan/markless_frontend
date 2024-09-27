@@ -1,4 +1,7 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import App from './App.vue';
+import { registerElement } from '@/element';
 
-createApp(App).mount('#app')
+const app = createApp(App);
+registerElement(app);
+app.mount('#app');
