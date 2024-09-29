@@ -37,15 +37,33 @@ export function linkUnread({ id }) {
     method: 'get',
   });
 }
-export function linkAdd({url, tags, read, desc}) {
+export function linkAdd({ url, tags, read, desc }) {
   return request({
     url: `/api/link/add`,
     method: 'post',
-    data:{
-        url,
-        tags,
-        read,
-        desc
-    }
+    data: {
+      url,
+      tags,
+      read,
+      desc,
+    },
+  });
+}
+
+/**
+ * @description
+ * @export
+ * @param {Array<Number>} links
+ * @param {Boolean} read
+ * @return {Promise}
+ */
+export function markReadState(links, read) {
+  return request({
+    url: '/api/link/markread',
+    method: 'post',
+    data: {
+      links,
+      read,
+    },
   });
 }

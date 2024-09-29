@@ -14,7 +14,12 @@
       </span>
     </div>
     <div class="link-tags">
-      <a v-for="(tag, i) in link.tags" :key="i" class="tag-item icon" @click.prevent="$emit('active-tag', `#${tag.name}`)">
+      <a
+        v-for="(tag, i) in link.tags"
+        :key="i"
+        class="tag-item icon"
+        @click.prevent="$emit('active-tag', `#${tag.name}`)"
+      >
         #{{ tag.name }}
       </a>
     </div>
@@ -225,7 +230,6 @@ import { linkUnread } from '@/api';
 import { PopTip } from '@/utils/tip';
 import { parseDate } from '@/utils/tool';
 
-
 const props = defineProps({
   link: {
     type: Object,
@@ -238,13 +242,19 @@ const props = defineProps({
 const emit = defineEmits(['edit', 'delete', 'copy', 'archive', 'read', 'unread', 'active-tag']);
 
 function viewLink(evt) {
-  emit('read', props.link.id);
   emit('view', props.link);
-  window.open(props.link.url);
+  linkRead({ id: props.link.id })
+    .then(res => {
+      console.log(res.data);
+    })
+    .finally(() => {
+      emit('read', props.link);
+      window.open(props.link.url);
+    });
 }
 
 function copyLink(evt) {
-  emit('copy', props.link.id);
+  emit('copy', props.link);
   window.navigator.clipboard.writeText(props.link.url).then(() => {
     evt.target.lastChild.innerText = '复制成功';
     PopTip.success('复制成功');

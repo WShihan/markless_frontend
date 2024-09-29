@@ -5,15 +5,12 @@
         <details open>
           <summary>添加标签</summary>
           <div class="form-item">
-            <label for="url">
-              链接
-              <span style="color: red">*</span>
-            </label>
             <textarea
               name="url"
               v-model="state.createdTag"
               v-focus
               style="min-height: 3em"
+              placeholder="多个标签用&分开"
             ></textarea>
           </div>
           <div class="form-item">
@@ -24,6 +21,9 @@
       <div class="form-item">
         <details>
           <summary>标签管理</summary>
+          <div class="form-item">
+            <span class="center">选择标签</span>
+          </div>
           <div class="form-item">
             <el-select
               v-model="state.activeTag"
@@ -43,6 +43,9 @@
                 <button class="submit" style="width: 5em">删除</button>
               </template>
             </el-popconfirm>
+          </div>
+          <div class="form-item">
+            <span class="center">选择应用的书签↑↓</span>
           </div>
           <div class="form-item">
             <el-select

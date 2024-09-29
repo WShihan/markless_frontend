@@ -67,14 +67,28 @@ a.btn {
     text-decoration: underline;
   }
 }
+.center {
+  margin: 0em auto;
+}
+details {
+  padding: 1em;
+  box-sizing: border-box;
+  border-radius: .5em;
+  background-color: $--input-bg-color;
+}
 button.submit {
   width: 100%;
   appearance: none;
   padding: 0.5em;
   border-radius: 0.5em;
   border: none;
+  color: #fff;
   cursor: pointer;
   background-color: $--base-color;
+  &:hover,
+  &:active {
+    opacity: 0.7;
+  }
 }
 
 input,
@@ -100,4 +114,9 @@ html {
 // 覆盖element样式
 :deep(.el-popper) {
   width: $--base-width !important;
+}
+:deep(.el-pager) {
+  .is-active {
+    background-color: $--base-color !important;
+  }
 }

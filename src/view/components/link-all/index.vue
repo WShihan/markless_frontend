@@ -15,8 +15,16 @@
         </template>
       </SearchOpt>
       <div class="link-btns">
-        <a href="{{$.Env.BaseURL}}/link/mark/read?v=0" class="icon">全部标为未阅</a>
-        <a href="{{$.Env.BaseURL}}/link/mark/unread?v=0" class="icon">全部标为已阅</a>
+        <el-popconfirm title="确定全部标为未阅吗" @confirm="onMarkLink(false)">
+          <template #reference>
+            <a class="icon">全部标为未阅</a>
+          </template>
+        </el-popconfirm>
+        <el-popconfirm title="确定全部标为已阅吗" @confirm="onMarkLink(true)">
+          <template #reference>
+            <a class="icon">全部标为已阅</a>
+          </template>
+        </el-popconfirm>
       </div>
     </div>
 
@@ -28,7 +36,7 @@
         @delete="onlinkDeleted"
         @read="onRead"
         @unread="onUnread"
-        @active-tag="(val)=> state.search.keyword = val"
+        @active-tag="val => (state.search.keyword = val)"
       />
     </div>
     <Pager
@@ -53,10 +61,12 @@ import { reactive } from 'vue';
 import { onBeforeMount } from 'vue';
 import { watch } from 'vue';
 import { linkPagination } from '@/api/index';
+import { markReadState } from '@/api/index';
 import Pager from '../pager.vue';
 import Link from '../link.vue';
 import SearchOpt from '../SearchOptions.vue';
 import { router } from '@/router';
+import { PopTip } from '@/utils/tip';
 
 const state = reactive({
   links: [],
@@ -104,13 +114,18 @@ function loadLinks() {
 }
 
 function onRead(link) {
-  console.log(router.currentRoute.value.query.read);
   const tLink = state.links.find(item => item.id == link.id);
   tLink.read = true;
+  if (state.search.read == '2') {
+    loadLinks();
+  }
 }
 function onUnread(link) {
   const tLink = state.links.find(item => item.id == link.id);
   tLink.read = false;
+  if (state.search.read == '1') {
+    loadLinks();
+  }
 }
 
 function onlinkDeleted(link) {
@@ -119,6 +134,25 @@ function onlinkDeleted(link) {
     debugger;
     state.links.splice(removeIdx, 1);
   }
+}
+
+function onMarkLink(read) {
+  markReadState(
+    state.links.map(item => item.id),
+    read
+  )
+    .then(res => {
+      const { status, msg } = res.data;
+      if (status) {
+        loadLinks();
+        PopTip.success('标记成功');
+      } else {
+        PopTip.success('标记失败');
+      }
+    })
+    .catch(err => {
+      console.error(err);
+    });
 }
 </script>
 
