@@ -1,7 +1,7 @@
 import axios from 'axios';
-// import { getCookie } from '@/utils/cookieJar';
 import nprogress from 'nprogress';
-// import router from '@/router';
+import {store} from '@/store'
+import {router} from '@/router'
 
 const request = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
@@ -14,7 +14,7 @@ request.interceptors.request.use(function (config) {
   if (config.method == 'post') {
     config.headers['content-type'] = 'application/json';
   }
-  config.headers['X-Token'] = 'WL60M97+9HlQPi8Qi8Qu1nNjkA3HcXO4ahD/eHvdzdrgidVZ0AhUXyasK/XAIfVj0lR9KmbDTmkDkAcqMj26UA==';
+  config.headers['Authorization'] = `Bearer ${store.getToken()}`
   return config;
 });
 
@@ -26,26 +26,26 @@ request.interceptors.response.use(
     } else return res;
   },
   err => {
-    // nprogress.done();
-    // if (err.response) {
-    //   const code = err.response.status;
-    //   const route = router.currentRoute.value
-    //   const curPath = route.path;
-    //   switch (code) {
-    //     case 401:
-    //     case 403:
-    //     case 422:
-    //       console.log(curPath);
-    //       console.log(route);
-    //       if (curPath !== '/login') {
-    //         router.push({ path: '/login', query: { redirect: curPath } });
-    //       }
-    //       break;
-    //     default:
-    //       break;
-    //   }
-    //   return;
-    // }
+    nprogress.done();
+    if (err.response) {
+      const code = err.response.status;
+      const route = router.currentRoute.value
+      const curPath = route.path;
+      switch (code) {
+        case 401:
+        case 403:
+        case 422:
+          console.log(curPath);
+          console.log(route);
+          if (curPath !== '/login') {
+            router.push({ path: '/login', query: { redirect: curPath } });
+          }
+          break;
+        default:
+          break;
+      }
+      return;
+    }
     return err;
   }
 );

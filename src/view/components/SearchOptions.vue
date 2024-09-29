@@ -9,6 +9,7 @@
       @input="onInput"
       @keyup="keyUp"
     />
+    <slot name="other"></slot>
     <button id="link-filter-btn" class="submit" type="submit" @click="$emit('submit')">
       <svg
         t="1726445320394"
@@ -39,6 +40,7 @@
 import { defineProps } from 'vue';
 import { defineEmits } from 'vue';
 import { reactive } from 'vue';
+import { watch } from 'vue';
 
 const props = defineProps({
   keyword: {
@@ -49,7 +51,12 @@ const props = defineProps({
 const state = reactive({
   keywordValue: props.keyword,
 });
+
 const emit = defineEmits(['update:keyword', 'change', 'submit']);
+watch(
+  () => props.keyword,
+  val => (state.keywordValue = val)
+);
 
 function onInput() {
   emit('update:keyword', state.keywordValue);

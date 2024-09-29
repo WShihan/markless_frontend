@@ -57,3 +57,10 @@ export function routes2nav(routes) {
 export function fmtNowDate(){
   return dayjs().format('YYYY-MM-DD');
 }
+
+export function parseDate(dt) {
+  let date = new Date(dt);
+  return `${date.getFullYear()}-${
+    date.getMonth() + 1
+  }-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+}

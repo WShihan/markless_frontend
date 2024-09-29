@@ -1,13 +1,22 @@
 <template>
   <div class="container">
     <Header />
-    <linkAll />
+    <router-view v-slot="{ Component }">
+      <keep-alive v-if="$route.meta.keepAlive">
+        <Transition name="fade">
+          <component :is="Component" :key="$route.name" />
+        </Transition>
+      </keep-alive>
+      <Transition name="fade" v-else>
+        <component :is="Component" :key="$route.name" />
+      </Transition>
+    </router-view>
   </div>
 </template>
 
 <script setup>
-import Header from './compoents/header.vue';
-import LinkAll from './compoents/link-all/index.vue';
+import Header from './components/header.vue';
+import LinkAll from './components/link-all/index.vue';
 function say(params) {
   alert(params);
 }

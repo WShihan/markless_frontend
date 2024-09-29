@@ -11,6 +11,44 @@ $--gap-color: #c4cfd1;
 $--input-height: 1.2em;
 
 
+* {
+  font-size: $--font-size;
+}
+// -----------------滚动条样式----------------
+@mixin scroll-style {
+  /* 设置滚动条的样式 */
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 0px;
+  }
+  /* 滚动槽 */
+  &::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background: rgb(179, 188, 201);
+  }
+  /* 滚动条滑块 */
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: $--base-color;
+  }
+  /* 设置滚动条的样式 */
+  &::-moz-scrollbar {
+    width: 1px;
+    height: 0px;
+  }
+  /* 滚动槽 */
+  &::-moz-scrollbar-track {
+    border-radius: 5px;
+    background: rgb(9, 35, 92);
+  }
+  /* 滚动条滑块 */
+  &::-moz-scrollbar-thumb {
+    border-radius: 1px;
+    background: rgb(21, 126, 201);
+  }
+}
+
+
 a {
   color: $--base-color;
 }
@@ -54,3 +92,8 @@ textarea {
   background: --input-bg-color;
   background-image: none;
 }
+
+html {
+  @include scroll-style();
+}
+
