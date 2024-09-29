@@ -18,7 +18,7 @@ export const routes = [
       path: '/register/',
       name: 'register',
       component: () => import('@/view/components/register.vue'),
-      meta: { title: '登录', loged: false },
+      meta: { title: '注册', loged: false },
     },
   {
     path: '/',
@@ -46,6 +46,12 @@ export const routes = [
         component: () => import('@/view/components/link-add.vue'),
         meta: { nav: true, title: '添加书签', keepAlive: true, loged: false },
       },
+      {
+        path: '/tags',
+        name: 'tags',
+        component: () => import('@/view/components/tags.vue'),
+        meta: { nav: true, title: '标签', keepAlive: true, loged: false },
+      },
     ],
   },
 ];
@@ -56,7 +62,8 @@ const router = createRouter({
 
 // 全局路由守卫
 router.beforeEach((to, from, next) => {
-  // nprogress.start();
+  nprogress.start();
+  document.title = to.meta.title
   next();
   //   document.title = to.meta.title || 'Mylog';
 
@@ -71,7 +78,7 @@ router.afterEach((to, from, next) => {
   // next();
   //   const navs = to.matched.map(item => item.meta.title);
   //   store.setNav(navs.join(' >> ') || '');
-  // nprogress.done();
+  nprogress.done();
 });
 
 export { router };

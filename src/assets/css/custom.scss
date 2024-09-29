@@ -10,7 +10,6 @@ $--tag-dock-visible: block;
 $--gap-color: #c4cfd1;
 $--input-height: 1.2em;
 
-
 * {
   font-size: $--font-size;
 }
@@ -47,7 +46,6 @@ $--input-height: 1.2em;
     background: rgb(21, 126, 201);
   }
 }
-
 
 a {
   color: $--base-color;
@@ -99,3 +97,7 @@ html {
   @include scroll-style();
 }
 
+// 覆盖element样式
+:deep(.el-popper) {
+  width: $--base-width !important;
+}

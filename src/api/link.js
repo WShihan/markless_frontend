@@ -1,8 +1,14 @@
 import request from '@/utils/request';
 
-export function linkAll({ page, keyword, read }) {
+export function linkAll() {
   return request({
     url: '/api/link/all',
+    method: 'get',
+  });
+}
+export function linkPagination({ page, keyword, read }) {
+  return request({
+    url: '/api/link/pagination',
     method: 'get',
     params: {
       page,

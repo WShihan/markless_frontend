@@ -52,7 +52,7 @@
 import { reactive } from 'vue';
 import { onBeforeMount } from 'vue';
 import { watch } from 'vue';
-import { linkAll } from '@/api/index';
+import { linkPagination } from '@/api/index';
 import Pager from '../pager.vue';
 import Link from '../link.vue';
 import SearchOpt from '../SearchOptions.vue';
@@ -84,7 +84,7 @@ onBeforeMount(() => {
 });
 
 function loadLinks() {
-  linkAll({ ...state.search })
+  linkPagination({ ...state.search })
     .then(res => {
       const {
         status,
