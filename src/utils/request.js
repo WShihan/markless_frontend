@@ -2,6 +2,7 @@ import axios from 'axios';
 import nprogress from 'nprogress';
 import {store} from '@/store'
 import {router} from '@/router'
+import { PopTip } from './tip';
 
 const request = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
@@ -31,6 +32,7 @@ request.interceptors.response.use(
       const code = err.response.status;
       const route = router.currentRoute.value
       const curPath = route.path;
+      PopTip.warning('登录过期')
       switch (code) {
         case 401:
         case 403:

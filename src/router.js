@@ -40,6 +40,12 @@ export const routes = [
         component: () => import('@/view/components/link-all/index.vue'),
         meta: { nav: true, title: '所有书签', keepAlive: true, loged: false },
       },
+      {
+        path: '/link-add',
+        name: 'link-add',
+        component: () => import('@/view/components/link-add.vue'),
+        meta: { nav: true, title: '添加书签', keepAlive: true, loged: false },
+      },
     ],
   },
 ];

@@ -54,6 +54,8 @@ a {
 }
 .page {
   flex: 1;
+  padding: 1em 0em;
+  box-sizing: border-box;
 }
 
 a.icon,

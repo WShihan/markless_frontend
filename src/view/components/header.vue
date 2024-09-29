@@ -41,9 +41,9 @@ const props = defineProps({
       return [
         { title: '书签', name: 'link-all', route: '/' },
         { title: '+书签', name: 'link-add', route: '/link/add' },
-        { title: '标签', name: 'link-add', route: '/tags' },
-        { title: '设置', name: 'link-add', route: '/setting' },
-        { title: '登出', name: 'logout', route: '/login' },
+        { title: '标签', name: 'tags', route: '/tags' },
+        { title: '设置', name: 'setting', route: '/setting' },
+        { title: '登出', name: 'login', route: '/login' },
       ];
     },
   },
@@ -61,7 +61,7 @@ function handleNav(nav){
   if (nav.name == 'logout'){
     logout()
   } 
-  router.push(nav.route)
+  router.push({name: nav.name})
 
 }
 </script>
