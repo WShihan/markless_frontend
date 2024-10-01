@@ -229,6 +229,7 @@ import { linkRead } from '@/api';
 import { linkUnread } from '@/api';
 import { PopTip } from '@/utils/tip';
 import { parseDate } from '@/utils/tool';
+import router from '@/router';
 
 const props = defineProps({
   link: {
@@ -280,7 +281,9 @@ function deleteLink(evt) {
 
 function archiveLink() {
   emit('archive', props.link);
+  router.push({name: 'link-archive', query:{id: props.link.id}})
 }
+
 function unreadLink() {
   linkUnread({ id: props.link.id }).then(res => {
     const { status } = res.data;
@@ -309,7 +312,10 @@ function readLink() {
 
 function editLink() {
   emit('edit', props.link);
+  router.push({name: 'link-edit', query:{'id': props.link.id}})
 }
+
+
 </script>
 
 <style scoped lang="scss">

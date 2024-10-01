@@ -1,25 +1,24 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import nprogress from 'nprogress';
 
+import { store } from '@/store/index.js';
 
-// import { store } from '@/store/index.js';
-
-// const tokenStore = store;
+const tokenStore = store;
 
 export const routes = [
-    {
-      path: '/login',
-      name: 'login',
-      query: { redirect: '/' },
-      component: () => import('@/view/components/login.vue'),
-      meta: { title: '登录', loged: false },
-    },
-    {
-      path: '/register/',
-      name: 'register',
-      component: () => import('@/view/components/register.vue'),
-      meta: { title: '注册', loged: false },
-    },
+  {
+    path: '/login',
+    name: 'login',
+    query: { redirect: '/' },
+    component: () => import('@/view/components/login.vue'),
+    meta: { title: '登录', loged: false },
+  },
+  {
+    path: '/register/',
+    name: 'register',
+    component: () => import('@/view/components/register.vue'),
+    meta: { title: '注册', loged: false },
+  },
   {
     path: '/',
     name: 'index',
@@ -47,6 +46,20 @@ export const routes = [
         meta: { nav: true, title: '添加书签', keepAlive: true, loged: false },
       },
       {
+        path: '/link-edit',
+        name: 'link-edit',
+        query: {id: ''},
+        component: () => import('@/view/components/link-edit.vue'),
+        meta: { nav: true, title: '编辑书签', keepAlive: false, loged: false },
+      },
+      {
+        path: '/link-archive',
+        name: 'link-archive',
+        query: {id: ''},
+        component: () => import('@/view/components/link-archive.vue'),
+        meta: { nav: true, title: '快照', keepAlive: false, loged: false },
+      },
+      {
         path: '/tags',
         name: 'tags',
         component: () => import('@/view/components/tags.vue'),
@@ -69,21 +82,14 @@ const router = createRouter({
 // 全局路由守卫
 router.beforeEach((to, from, next) => {
   nprogress.start();
-  document.title = to.meta.title
-  next();
-  //   document.title = to.meta.title || 'Mylog';
-
-  //   document.title = `Mylog-${to.meta.title}`;
-  //   if (to.meta.loged) {
-  //     if (tokenStore.getToken()) next();
-  //     else next(`/login?redirect=${to.path}`);
-  //   } else next();
+  document.title = to.meta.title;
+  if (to.meta.loged) {
+    if (tokenStore.getToken()) next();
+    else next(`/login?redirect=${to.path}`);
+  } else next();
 });
 
 router.afterEach((to, from, next) => {
-  // next();
-  //   const navs = to.matched.map(item => item.meta.title);
-  //   store.setNav(navs.join(' >> ') || '');
   nprogress.done();
 });
 

@@ -123,7 +123,7 @@ textarea {
   background: var(--input-bg-color);
   background-image: none;
 }
-input {
+input, textarea {
   &.disable {
     border: none !important
   }

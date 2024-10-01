@@ -62,7 +62,11 @@
           <input type="text" readonly name="token" v-model="state.info.user.token" />
         </div>
         <div class="form-item">
-          <button class="submit" @click="onTokenRefresh">更新</button>
+          <el-popconfirm title="确定更新吗？" @confirm="onTokenRefresh">
+            <template #reference>
+              <button class="submit">更新</button>
+            </template>
+          </el-popconfirm>
           <el-popconfirm title="确定删除吗？" @confirm="onTokenDel">
             <template #reference>
               <button class="submit danger">删除</button>

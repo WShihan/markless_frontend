@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="icon" @click="switchTheme" title="切换主题">
+    <div class="icon" @click="()=> $router.push('/')" title="首页">
       <svg
         t="1727296045975"
         class="icon"
