@@ -322,7 +322,7 @@ function editLink() {
   margin: 0.5em 0em;
   border-radius: 0.2em;
   box-sizing: border-box;
-  background-color: #f1f0f0;
+  background-color: var(--input-bg-color);
 
   .link-header {
     display: flex;

@@ -1,18 +1,19 @@
-$--base-width: 620px;
-$--font-size: 13px;
-$--active-color: rgb(37 131 215);
-$--page-bg-color: #fff;
-$--input-bg-color: #e3e8ee57;
-$--sep-color: #efe6e6;
-$--font-color: #585353;
-$--base-color: rgb(44 156 204);
-$--tag-dock-visible: block;
-$--gap-color: #c4cfd1;
-$--input-height: 1.2em;
+$--base-width: var(--base-width);
+$--font-size: var(--font-size);
+$--active-color: var(--active-color);
+$--page-bg-color: var(--page-bg-color);
+$--input-bg-color: var(--input-bg-color);
+$--sep-color: var(--sep-color);
+$--font-color: var(--font-color);
+$--base-color: var(--base-color);
+$--tag-dock-visible: var(--tag-dock-visible);
+$--gap-color: var(--gap-color);
+$--input-height: var(--input-bg-color);
 
 * {
   font-size: $--font-size;
 }
+
 // -----------------滚动条样式----------------
 @mixin scroll-style {
   /* 设置滚动条的样式 */
@@ -47,6 +48,11 @@ $--input-height: 1.2em;
   }
 }
 
+body {
+  position: relative;
+  color: $--font-color !important;
+  background-color: var(--page-bg-color);
+}
 a {
   color: $--base-color;
 }
@@ -73,7 +79,7 @@ a.btn {
 details {
   padding: 1em;
   box-sizing: border-box;
-  border-radius: .5em;
+  border-radius: 0.5em;
   background-color: $--input-bg-color;
 }
 button.submit {
@@ -103,7 +109,8 @@ textarea {
   border-radius: 5px;
   appearance: none;
   color: $--font-color;
-  background: --input-bg-color;
+  border: 1.5px solid var(--base-color);
+  background: var(--input-bg-color);
   background-image: none;
 }
 
@@ -115,8 +122,28 @@ html {
 :deep(.el-popper) {
   width: $--base-width !important;
 }
-:deep(.el-pager) {
-  .is-active {
+:deep(.el-pagination) {
+  button {
+    color: #fff;
     background-color: $--base-color !important;
   }
+}
+:deep(.el-pager) {
+  li {
+    color: $--font-color !important;
+    background-color: $--input-bg-color !important;
+  }
+  .is-active {
+    color: #fff !important;
+    background-color: $--base-color !important;
+  }
+}
+
+:deep(.el-select) {
+  .el-select__wrapper {
+    background-color: transparent;
+  }
+}
+:deep(.el-scrollbar){
+  background: $--input-bg-color;
 }

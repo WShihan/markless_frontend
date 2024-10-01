@@ -52,6 +52,12 @@ export const routes = [
         component: () => import('@/view/components/tags.vue'),
         meta: { nav: true, title: '标签', keepAlive: true, loged: false },
       },
+      {
+        path: '/setting',
+        name: 'setting',
+        component: () => import('@/view/components/setting.vue'),
+        meta: { nav: true, title: '设置', keepAlive: true, loged: false },
+      },
     ],
   },
 ];

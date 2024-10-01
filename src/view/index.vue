@@ -33,6 +33,5 @@ function say(params) {
   color: $--font-color;
   padding: 0.5em;
   box-sizing: border-box;
-  // background-color: $--base-color;
 }
 </style>

@@ -25,6 +25,7 @@
 import { userLogin } from '@/api';
 import { PopTip } from '@/utils/tip';
 import {store} from '@/store'
+import {setCookie} from '@/utils/cookieJar'
 
 let tokenStore = store;
 
@@ -71,7 +72,8 @@ export default {
             const {status, data} = res.data
             if (status) {
               PopTip.success("登陆成功");
-              tokenStore.setToken(res.data.data['access_token'])
+              tokenStore.setToken(data['access_token'])
+              setCookie('lang', data.lang)
               this.$router.push({
                 path: this.$route.query.redirect || '/',
               });
