@@ -82,19 +82,29 @@ details {
   border-radius: 0.5em;
   background-color: $--input-bg-color;
 }
-button.submit {
-  width: 100%;
+button {
   appearance: none;
   padding: 0.5em;
   border-radius: 0.5em;
   border: none;
   color: #fff;
   cursor: pointer;
-  background-color: $--base-color;
   &:hover,
   &:active {
     opacity: 0.7;
   }
+}
+
+button.submit {
+  width: 100%;
+  background-color: $--base-color;
+
+}
+
+button.danger {
+  width: 100%;
+  background-color: rgb(175, 67, 67) !important;
+
 }
 
 input,
@@ -113,6 +123,11 @@ textarea {
   background: var(--input-bg-color);
   background-image: none;
 }
+input {
+  &.disable {
+    border: none !important
+  }
+}
 
 html {
   @include scroll-style();
@@ -121,7 +136,9 @@ html {
 // 覆盖element样式
 :deep(.el-popper) {
   width: $--base-width !important;
+  background: transparent !important;
 }
+
 :deep(.el-pagination) {
   button {
     color: #fff;
@@ -144,6 +161,14 @@ html {
     background-color: transparent;
   }
 }
+:deep(.el-scrollbar){
+  background: $--input-bg-color;
+}
+
+:deep(.el-tag){
+  background-color: transparent;
+}
+
 :deep(.el-scrollbar){
   background: $--input-bg-color;
 }

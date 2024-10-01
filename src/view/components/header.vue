@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="icon">
+    <div class="icon" @click="switchTheme" title="切换主题">
       <svg
         t="1727296045975"
         class="icon"
@@ -20,8 +20,10 @@
     </div>
     <div class="navs">
       <ul>
-        <li v-for="(nav, i) in props.navs" :key="i" >
-          <button :class="nav.name == tName?'active':''" @click.prevent="handleNav(nav)">{{ nav.title }}</button>
+        <li v-for="(nav, i) in props.navs" :key="i">
+          <button :class="nav.name == tName ? 'active' : ''" @click.prevent="handleNav(nav)">
+            {{ nav.title }}
+          </button>
         </li>
       </ul>
     </div>
@@ -33,6 +35,7 @@ import { defineProps } from 'vue';
 import { computed } from 'vue';
 import { router } from '@/router';
 import { store } from '@/store';
+import { setCookie, getCookie } from '@/utils/cookieJar';
 
 const props = defineProps({
   navs: {
@@ -49,21 +52,27 @@ const props = defineProps({
   },
 });
 
-
 const tName = computed(() => {
-  return router.currentRoute.value.name
+  return router.currentRoute.value.name;
 });
-function logout(){
-  store.removeToken()
+function logout() {
+  store.removeToken();
 }
 
-function handleNav(nav){
-  if (nav.name == 'logout'){
-    logout()
-  } 
-  router.push({name: nav.name})
-
+function handleNav(nav) {
+  if (nav.name == 'logout') {
+    logout();
+  }
+  router.push({ name: nav.name });
 }
+
+function initialTheme() {
+  const theme = getCookie('markless-theme') || 'dark';
+  const body = document.body;
+  body.classList.add(theme);
+}
+initialTheme();
+
 </script>
 
 <style scoped lang="scss">
@@ -106,6 +115,7 @@ function handleNav(nav){
   .icon {
     display: flex;
     align-items: center;
+    cursor: pointer;
     svg {
       width: 2em;
       height: 2em;
