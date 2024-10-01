@@ -27,22 +27,29 @@ export function tagAdd({ names }) {
 export function tagRelatedLinks({ name }) {
   return request({
     url: `/api/tag/related-link/${name}`,
-    method: 'get'
+    method: 'get',
   });
 }
 /**
  * @description
  * @export
  * @param {string, Array<Number>} { tag, links }
- * @return {Promise} 
+ * @return {Promise}
  */
 export function attachLink({ tag, links }) {
   return request({
     url: `/api/tag/attach`,
     method: 'post',
-    data:{
+    data: {
       tag,
-      links
-    }
+      links,
+    },
+  });
+}
+
+export function tagStastic() {
+  return request({
+    url: '/api/tag/stastic',
+    method: 'get',
   });
 }

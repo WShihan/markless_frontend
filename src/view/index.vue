@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <Header />
+    <TagDock />
     <router-view v-slot="{ Component }">
       <keep-alive v-if="$route.meta.keepAlive">
         <Transition name="fade">
@@ -16,14 +17,12 @@
 
 <script setup>
 import Header from './components/header.vue';
-import LinkAll from './components/link-all/index.vue';
-function say(params) {
-  alert(params);
-}
+import TagDock from './components/tag-dock.vue';
 </script>
 
 <style scoped lang="scss">
 .container {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: $--base-width;

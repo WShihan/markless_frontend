@@ -23,9 +23,6 @@ export const routes = [
     path: '/',
     name: 'index',
     component: () => import('@/view/index.vue'),
-    query: {
-      read: 0,
-    },
     meta: {
       title: 'Markless',
       keepAlive: true,
@@ -36,6 +33,9 @@ export const routes = [
       {
         path: '/link-all',
         name: 'link-all',
+        query: {
+          keyword: '',
+        },
         component: () => import('@/view/components/link-all/index.vue'),
         meta: { nav: true, title: '所有书签', keepAlive: true, loged: false },
       },
@@ -48,14 +48,14 @@ export const routes = [
       {
         path: '/link-edit',
         name: 'link-edit',
-        query: {id: ''},
+        query: { id: '' },
         component: () => import('@/view/components/link-edit.vue'),
         meta: { nav: true, title: '编辑书签', keepAlive: false, loged: false },
       },
       {
         path: '/link-archive',
         name: 'link-archive',
-        query: {id: ''},
+        query: { id: '' },
         component: () => import('@/view/components/link-archive.vue'),
         meta: { nav: true, title: '快照', keepAlive: false, loged: false },
       },

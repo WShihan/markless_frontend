@@ -3,7 +3,7 @@
     <div class="form">
       <div class="form-item">
         <details open>
-          <summary>书签信息</summary>
+          <summary>快照信息</summary>
           <div class="form-item">
             <label for="desc">链接</label>
             <input class="disable" readonly name="desc" v-model="state.link.url" />

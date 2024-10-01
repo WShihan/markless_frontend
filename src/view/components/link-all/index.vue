@@ -60,6 +60,7 @@
 import { reactive } from 'vue';
 import { onBeforeMount } from 'vue';
 import { watch } from 'vue';
+import { computed } from 'vue';
 import { linkPagination } from '@/api/index';
 import { markReadState } from '@/api/index';
 import Pager from '../pager.vue';
@@ -79,6 +80,12 @@ const state = reactive({
   },
 });
 
+watch(
+  () => router.currentRoute.value.query.keyword,
+  val => {
+    state.search.keyword = val
+  }
+);
 watch(
   () => state.search,
   () => {
