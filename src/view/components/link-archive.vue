@@ -23,6 +23,10 @@
             ></textarea>
           </div>
           <div class="form-item">
+            <label for="tag">标签</label>
+            <span class="tag-v" v-for="(tag, i) in state.link.tags" :key="i">#{{ tag.name }}</span>
+          </div>
+          <div class="form-item">
             <el-popconfirm title="确定更新吗？" @confirm="onUpdateInfo">
               <template #reference>
                 <button class="submit" :disabled="btnActive">
@@ -34,6 +38,11 @@
         </details>
       </div>
     </div>
+    <div
+      v-if="state.link.archive"
+      class="archive-content"
+      v-html="state.link.archive.content"
+    ></div>
   </div>
 </template>
 
@@ -116,6 +125,9 @@ function onUpdateInfo() {
     }
     summary {
       cursor: pointer;
+    }
+    .tag-v {
+      margin: 0em 1em;
     }
   }
 }

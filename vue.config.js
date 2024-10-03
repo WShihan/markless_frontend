@@ -2,7 +2,8 @@ const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
   lintOnSave: false,
-  assetsDir: 'static',
+  publicPath:'/webapp/markless',
+  assetsDir: './static',
   css: {
     loaderOptions: {
       scss: {
@@ -10,4 +11,11 @@ module.exports = defineConfig({
       },
     },
   },
+  chainWebpack(config) {
+    if (process.env.NODE_ENV === 'production') {
+      config
+        .plugin('webpack-bundle-analyzer')
+        .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin);
+    }
+  }
 })

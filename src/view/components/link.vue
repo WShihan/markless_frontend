@@ -66,7 +66,7 @@
             p-id="1163"
           ></path>
         </svg>
-        <span class="label">标为未读</span>
+        <span class="label">标为未阅</span>
       </a>
       <a v-else @click.prevent="readLink">
         <svg
@@ -110,7 +110,7 @@
             p-id="1163"
           ></path>
         </svg>
-        <span class="label">标为已读</span>
+        <span class="label">标为已阅</span>
       </a>
       <span class="gap">｜</span>
       <a @click.prevent="editLink">

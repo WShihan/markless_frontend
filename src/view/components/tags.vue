@@ -19,7 +19,7 @@
         </details>
       </div>
       <div class="form-item">
-        <details>
+        <details open>
           <summary>标签管理</summary>
           <div class="form-item">
             <span class="center">选择标签</span>
@@ -40,12 +40,12 @@
             </el-select>
             <el-popconfirm title="确定删除吗" @confirm="onTagDelete">
               <template #reference>
-                <button class="submit" style="width: 5em">删除</button>
+                <button class="submit danger" style="width: 5em">删除</button>
               </template>
             </el-popconfirm>
           </div>
           <div class="form-item">
-            <span class="center">选择应用的书签↑↓</span>
+            <span class="center">选择应用的书签↓↓</span>
           </div>
           <div class="form-item">
             <el-select
@@ -54,7 +54,7 @@
               collapse-tags
               placeholder="选择绑定的书签"
             >
-              <el-option v-for="(item, i) in state.links" :label="item.title" :value="item.id" />
+              <el-option v-for="(item, i) in state.links" :label="item.title.slice(0, 40)" :value="item.id" style="max-width:var(--base-width)" />
             </el-select>
             <el-popconfirm title="确定更新吗" @confirm="onAttachLink">
               <template #reference>
@@ -213,4 +213,13 @@ function onAttachLink() {
     }
   }
 }
+:deep(.el-select) {
+  .el-select__popper {
+    width: var(--base-width) !important;
+    overflow: hidden;
+    background: transparent !important;
+  }
+
+}
+
 </style>

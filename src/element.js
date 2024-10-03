@@ -1,23 +1,23 @@
 // 按需引用element-plus
 import {
-  ElButton,
+  // ElButton,
   ElInput,
-  ElForm,
-  ElFormItem,
-  ElRadio,
-  ElRadioGroup,
+  // ElForm,
+  // ElFormItem,
+  // ElRadio,
+  // ElRadioGroup,
   ElOption,
   ElSelect,
-  ElOptionGroup,
-  ElTable,
-  ElTableColumn,
+  // ElOptionGroup,
+  // ElTable,
+  // ElTableColumn,
   ElPagination,
-  ElDialog,
-  ElLoading,
+  // ElDialog,
+  // ElLoading,
   ElSwitch,
-  ElDatePicker,
-  ElCollapse,
-  ElCollapseItem,
+  // ElDatePicker,
+  // ElCollapse,
+  // ElCollapseItem,
   ElPopconfirm,
 } from 'element-plus';
 
@@ -25,23 +25,23 @@ import {
 import 'element-plus/theme-chalk/index.css';
 
 export function registerElement(app) {
-  app.use(ElButton);
+  // app.use(ElButton);
   app.use(ElInput);
-  app.use(ElForm);
-  app.use(ElFormItem);
-  app.use(ElRadio);
-  app.use(ElRadioGroup);
+  // app.use(ElForm);
+  // app.use(ElFormItem);
+  // app.use(ElRadio);
+  // app.use(ElRadioGroup);
   app.use(ElOption);
   app.use(ElSelect);
-  app.use(ElOptionGroup);
-  app.use(ElTable);
-  app.use(ElTableColumn);
+  // app.use(ElOptionGroup);
+  // app.use(ElTable);
+  // app.use(ElTableColumn);
   app.use(ElPagination);
-  app.use(ElDialog);
-  app.use(ElLoading);
+  // app.use(ElDialog);
+  // app.use(ElLoading);
   app.use(ElSwitch);
-  app.use(ElDatePicker);
-  app.use(ElCollapse);
-  app.use(ElCollapseItem);
+  // app.use(ElDatePicker);
+  // app.use(ElCollapse);
+  // app.use(ElCollapseItem);
   app.use(ElPopconfirm);
 }

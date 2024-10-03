@@ -132,11 +132,22 @@ input, textarea {
 html {
   @include scroll-style();
 }
-
+#readability-page-1 {
+  img {
+    display: block;
+    max-width: $--base-width;
+    margin: 1em auto;
+    border-radius: .2em;
+  }
+}
 // 覆盖element样式
-:deep(.el-popper) {
-  width: $--base-width !important;
-  background: transparent !important;
+:deep(.el-select) {
+  .el-select__popper {
+    width: var(--base-width) !important;
+    overflow: hidden;
+    background: transparent !important;
+  }
+
 }
 
 :deep(.el-pagination) {
@@ -161,8 +172,10 @@ html {
     background-color: transparent;
   }
 }
+
+
 :deep(.el-scrollbar){
-  background: $--input-bg-color;
+  width: var(--base-width);
 }
 
 :deep(.el-tag){
