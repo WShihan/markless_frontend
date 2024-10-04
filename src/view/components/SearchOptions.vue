@@ -6,6 +6,7 @@
       value=""
       placeholder="搜索"
       v-model="state.keywordValue"
+      v-focus
       @input="onInput"
       @keyup="keyUp"
     />

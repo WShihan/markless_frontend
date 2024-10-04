@@ -1,5 +1,5 @@
 <template>
-  <div class="link-all page">
+  <div class="link-all page" v-loading="state.loading">
     <div>
       <SearchOpt
         :keyword="state.search.keyword"
@@ -60,7 +60,6 @@
 import { reactive } from 'vue';
 import { onBeforeMount } from 'vue';
 import { watch } from 'vue';
-import { computed } from 'vue';
 import { linkPagination } from '@/api/index';
 import { markReadState } from '@/api/index';
 import Pager from '../pager.vue';
@@ -78,6 +77,7 @@ const state = reactive({
     size: 20,
     read: '0',
   },
+  loading: false
 });
 
 watch(
@@ -101,6 +101,7 @@ onBeforeMount(() => {
 });
 
 function loadLinks() {
+  state.loading = true
   linkPagination({ ...state.search })
     .then(res => {
       const {
@@ -117,7 +118,8 @@ function loadLinks() {
     })
     .catch(err => {
       console.log(err);
-    });
+    })
+    .finally(()=> state.loading = false);
 }
 
 function onRead(link) {

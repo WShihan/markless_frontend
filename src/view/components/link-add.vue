@@ -1,6 +1,6 @@
 <template>
-  <div class="link-add page">
-    <div class="form">
+  <div class="link-add page" >
+    <div class="form" v-loading="state.loading">
       <div class="form-item">
         <label for="url">
           链接
@@ -60,6 +60,7 @@ const state = reactive({
   },
   tags: [],
   selectedTags: [],
+  loading: false
 });
 
 const btnActive = computed(() => {
@@ -79,6 +80,7 @@ onBeforeMount(() => {
 
 function submit() {
   if (state.link.url == '') return;
+  state.loading = true
   state.link.tags = state.selectedTags.join('&');
   linkAdd(state.link)
     .then(res => {
@@ -92,7 +94,7 @@ function submit() {
     })
     .catch(err => {
       PopTip.error(err);
-    });
+    }).finally(() => state.loading = false);
 }
 </script>
 

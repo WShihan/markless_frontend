@@ -2,7 +2,7 @@
   <div class="link-add page">
     <div class="form">
       <div class="form-item">
-        <details open>
+        <details open v-loading="state.loading.add">
           <summary>添加标签</summary>
           <div class="form-item">
             <textarea
@@ -19,7 +19,7 @@
         </details>
       </div>
       <div class="form-item">
-        <details open>
+        <details open v-loading="state.loading.tagAll">
           <summary>标签管理</summary>
           <div class="form-item">
             <span class="center">选择标签</span>
@@ -34,7 +34,7 @@
                 v-for="(item, i) in state.tags"
                 :key="i"
                 selected
-                :label="item"
+                :label="`#${item}`"
                 :value="item"
               />
             </el-select>
@@ -45,7 +45,7 @@
             </el-popconfirm>
           </div>
           <div class="form-item">
-            <span class="center">选择应用的书签↓↓</span>
+            <span class="center">↑↑ 选择应用的书签 ↓↓</span>
           </div>
           <div class="form-item">
             <el-select
@@ -54,13 +54,16 @@
               collapse-tags
               placeholder="选择绑定的书签"
             >
-              <el-option v-for="(item, i) in state.links" :label="item.title.slice(0, 40)" :value="item.id" style="max-width:var(--base-width)" />
+              <el-option
+                v-for="(item, i) in state.links"
+                :label="item.title.slice(0, 40)"
+                :value="item.id"
+                style="max-width: var(--base-width)"
+              />
             </el-select>
             <el-popconfirm title="确定更新吗" @confirm="onAttachLink">
               <template #reference>
-                <button class="submit" style="width: 5em" >
-                  更新
-                </button>
+                <button class="submit" style="width: 5em">更新</button>
               </template>
             </el-popconfirm>
           </div>
@@ -89,6 +92,10 @@ const state = reactive({
   activeTag: [],
   appliedLinks: [],
   links: [],
+  loading: {
+    add: false,
+    tagAll: false,
+  },
 });
 
 watch(
@@ -154,6 +161,7 @@ function onTagDelete() {
 
 function onAddTag() {
   if (state.createdTag == '') return;
+  state.loading.add = true;
   tagAdd({ names: state.createdTag.split('&') })
     .then(res => {
       const { status, msg } = res.data;
@@ -168,31 +176,41 @@ function onAddTag() {
     .catch(err => {
       PopTip.error(err);
       console.log(err);
-    });
+    })
+    .finally(() => (state.loading.add = false));
 }
 
 function onLoadRelatedLinks() {
   if (state.activeTag == '') return;
-  tagRelatedLinks({ name: state.activeTag }).then(res => {
-    const { status, msg, data } = res.data;
-    if (status) {
-      if (data) {
-        state.appliedLinks.length = 0;
-        state.appliedLinks.push(...data.map(item => item.id));
+  state.loading.tagAll = true;
+  tagRelatedLinks({ name: state.activeTag })
+    .then(res => {
+      const { status, msg, data } = res.data;
+      if (status) {
+        if (data) {
+          state.appliedLinks.length = 0;
+          state.appliedLinks.push(...data.map(item => item.id));
+        }
+      } else {
+        PopTip.info(msg);
       }
-    } else {
-      PopTip.info(msg);
-    }
-  });
+    })
+    .finally(() => (state.loading.tagAll = false));
 }
 
 function onAttachLink() {
-  attachLink({ tag: state.activeTag, links: state.appliedLinks }).then(res => {
-    const { status, msg } = res.data;
-    if (status) {
-      console.log(res.data.data);
-    }
-  });
+  attachLink({ tag: state.activeTag, links: state.appliedLinks })
+    .then(res => {
+      const { status, msg } = res.data;
+      if (status) {
+        PopTip.success('更新成功');
+      } else {
+        throw msg;
+      }
+    })
+    .catch(err => {
+      PopTip.warning(err);
+    });
 }
 </script>
 
@@ -219,7 +237,5 @@ function onAttachLink() {
     overflow: hidden;
     background: transparent !important;
   }
-
 }
-
 </style>
