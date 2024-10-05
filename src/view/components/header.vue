@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="icon" @click="()=> $router.push('/')" title="首页">
+    <div class="icon" @click="() => $router.push('/')" title="首页">
       <svg
         t="1727296045975"
         class="icon"
@@ -22,7 +22,7 @@
       <ul>
         <li v-for="(nav, i) in props.navs" :key="i">
           <button :class="nav.name == tName ? 'active' : ''" @click.prevent="handleNav(nav)">
-            {{ nav.title }}
+            {{ $t(`lang.navs.${nav.name}`) }}
           </button>
         </li>
       </ul>
@@ -35,18 +35,18 @@ import { defineProps } from 'vue';
 import { computed } from 'vue';
 import { router } from '@/router';
 import { store } from '@/store';
-import { setCookie, getCookie } from '@/utils/cookieJar';
+import { getCookie } from '@/utils/cookieJar';
 
 const props = defineProps({
   navs: {
     type: Array,
     default: () => {
       return [
-        { title: '书签', name: 'link-all', route: '/' },
-        { title: '+书签', name: 'link-add', route: '/link/add' },
-        { title: '标签', name: 'tags', route: '/tags' },
-        { title: '设置', name: 'setting', route: '/setting' },
-        { title: '登出', name: 'login', route: '/login' },
+        { name: 'link-all', route: '/' },
+        { name: 'link-add', route: '/link/add' },
+        { name: 'tags', route: '/tags' },
+        { name: 'setting', route: '/setting' },
+        { name: 'logout', route: '/login' },
       ];
     },
   },
@@ -62,6 +62,8 @@ function logout() {
 function handleNav(nav) {
   if (nav.name == 'logout') {
     logout();
+    router.push({ name: 'login' });
+    return;
   }
   router.push({ name: nav.name });
 }
@@ -72,7 +74,6 @@ function initialTheme() {
   body.classList.add(theme);
 }
 initialTheme();
-
 </script>
 
 <style scoped lang="scss">

@@ -2,10 +2,10 @@ import axios from 'axios';
 import nprogress from 'nprogress';
 import {store} from '@/store'
 import {router} from '@/router'
-import { PopTip } from './tip';
+import { PopTip } from '../utils/tip';
 
 const request = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API,
+  baseURL: window.config.API || '/api',
   timeout: 60000 * 5,
 });
 request.defaults.withCredentials = true;

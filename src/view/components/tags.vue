@@ -3,31 +3,33 @@
     <div class="form">
       <div class="form-item">
         <details open v-loading="state.loading.add">
-          <summary>添加标签</summary>
+          <summary>{{ $t('lang.page.tags.add.summary') }}</summary>
           <div class="form-item">
             <textarea
               name="url"
               v-model="state.createdTag"
               v-focus
               style="min-height: 3em"
-              placeholder="多个标签用&分开"
+              :placeholder="$t('lang.page.tags.add.placeholder')"
             ></textarea>
           </div>
           <div class="form-item">
-            <button class="submit" :disabled="btnActive" @click.prevent="onAddTag">添加</button>
+            <button class="submit" :disabled="btnActive" @click.prevent="onAddTag">
+              {{ $t('lang.submit.add') }}
+            </button>
           </div>
         </details>
       </div>
       <div class="form-item">
         <details open v-loading="state.loading.tagAll">
-          <summary>标签管理</summary>
+          <summary>{{ $t('lang.page.tags.manage.summary') }}</summary>
           <div class="form-item">
-            <span class="center">选择标签</span>
+            <span class="center">{{ $t('lang.page.tags.manage.placeholder.selectTag') }}</span>
           </div>
           <div class="form-item">
             <el-select
               v-model="state.activeTag"
-              placeholder="选择标签"
+              :placeholder="$t('lang.page.tags.manage.placeholder.selectTag')"
               @change="val => (state.activeTag = val)"
             >
               <el-option
@@ -38,21 +40,23 @@
                 :value="item"
               />
             </el-select>
-            <el-popconfirm title="确定删除吗" @confirm="onTagDelete">
+            <el-popconfirm :title="$t('lang.confirm.delete')" @confirm="onTagDelete">
               <template #reference>
-                <button class="submit danger" style="width: 5em">删除</button>
+                <button class="submit danger" style="width: 5em">
+                  {{ $t('lang.submit.delete') }}
+                </button>
               </template>
             </el-popconfirm>
           </div>
           <div class="form-item">
-            <span class="center">↑↑ 选择应用的书签 ↓↓</span>
+            <span class="center">{{ $t('lang.page.tags.manage.tip') }}</span>
           </div>
           <div class="form-item">
             <el-select
               v-model="state.appliedLinks"
               multiple
               collapse-tags
-              placeholder="选择绑定的书签"
+              :placeholder="$t('lang.page.tags.manage.placeholder.appliedTag')"
             >
               <el-option
                 v-for="(item, i) in state.links"
@@ -61,9 +65,9 @@
                 style="max-width: var(--base-width)"
               />
             </el-select>
-            <el-popconfirm title="确定更新吗" @confirm="onAttachLink">
+            <el-popconfirm :title="$t('lang.confirm.update')" @confirm="onAttachLink">
               <template #reference>
-                <button class="submit" style="width: 5em">更新</button>
+                <button class="submit" style="width: 5em">{{ $t('lang.submit.update') }}</button>
               </template>
             </el-popconfirm>
           </div>
@@ -85,7 +89,10 @@ import { tagRelatedLinks } from '@/api';
 import { PopTip } from '@/utils/tip';
 import { onBeforeMount } from 'vue';
 import { watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 
+
+const { t } = useI18n();
 const state = reactive({
   createdTag: '',
   tags: [],
@@ -152,7 +159,7 @@ function onTagDelete() {
         state.tags.splice(idx, 1);
         state.activeTag = '';
       }
-      PopTip.success('删除成功');
+      PopTip.success(t('lang.message.success.delete'));
     } else {
       PopTip.info(msg);
     }
@@ -166,7 +173,7 @@ function onAddTag() {
     .then(res => {
       const { status, msg } = res.data;
       if (status) {
-        PopTip.success('添加成功');
+        PopTip.success(t('lang.message.success.add'));
         state.createdTag = '';
         onLoadTags();
       } else {
@@ -203,7 +210,7 @@ function onAttachLink() {
     .then(res => {
       const { status, msg } = res.data;
       if (status) {
-        PopTip.success('更新成功');
+        PopTip.success(t('lang.message.success.update'));
       } else {
         throw msg;
       }
@@ -215,22 +222,6 @@ function onAttachLink() {
 </script>
 
 <style scoped lang="scss">
-.form {
-  .form-item {
-    display: flex;
-    gap: 0.5em;
-    margin: 1em 0em;
-    label {
-      min-width: 4em;
-    }
-    details {
-      flex: 1;
-    }
-    summary {
-      cursor: pointer;
-    }
-  }
-}
 :deep(.el-select) {
   .el-select__popper {
     width: var(--base-width) !important;

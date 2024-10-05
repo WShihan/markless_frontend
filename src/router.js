@@ -26,7 +26,6 @@ export const routes = [
     meta: {
       title: 'Markless',
       keepAlive: true,
-      //   loged: process.env.NODE_ENV === 'development' ? true : false,
     },
     redirect: 'link-all',
     children: [

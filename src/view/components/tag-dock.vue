@@ -17,7 +17,7 @@
           p-id="1922"
         ></path>
       </svg>
-      <span>标签</span>
+      <span>{{ $t('lang.navs.tags') }}</span>
     </div>
     <div class="pair" v-for="(item, i) in state.stat">
       <a class="icon" @click="$router.push({name: 'link-all', query:{keyword: '#' + item.name}})">{{ item.name }}</a>

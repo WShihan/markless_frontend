@@ -8,21 +8,21 @@
       >
         <template #other>
           <el-select v-model="state.search.read" placeholder="Select" style="width: 7em">
-            <el-option label="所有" selected value="0" />
-            <el-option label="已阅" value="1" />
-            <el-option label="未阅" value="2" />
+            <el-option :label="$t('lang.page.link-all.search.select.all')" selected value="0" />
+            <el-option :label="$t('lang.page.link-all.search.select.read')" selected value="1" />
+            <el-option :label="$t('lang.page.link-all.search.select.unread')" selected value="2" />
           </el-select>
         </template>
       </SearchOpt>
       <div class="link-btns">
-        <el-popconfirm title="确定全部标为未阅吗" @confirm="onMarkLink(false)">
+        <el-popconfirm :title="$t('lang.confirm.update')" @confirm="onMarkLink(true)">
           <template #reference>
-            <a class="icon">全部标为未阅</a>
+            <a class="icon">{{ $t('lang.page.link-all.mark.read') }}</a>
           </template>
         </el-popconfirm>
-        <el-popconfirm title="确定全部标为已阅吗" @confirm="onMarkLink(true)">
+        <el-popconfirm :title="$t('lang.confirm.update')" @confirm="onMarkLink(false)">
           <template #reference>
-            <a class="icon">全部标为已阅</a>
+            <a class="icon">{{ $t('lang.page.link-all.mark.unread') }}</a>
           </template>
         </el-popconfirm>
       </div>
@@ -62,12 +62,14 @@ import { onBeforeMount } from 'vue';
 import { watch } from 'vue';
 import { linkPagination } from '@/api/index';
 import { markReadState } from '@/api/index';
-import Pager from '../pager.vue';
-import Link from '../link.vue';
-import SearchOpt from '../SearchOptions.vue';
+import Pager from './components/pager.vue';
+import Link from './components/link.vue';
+import SearchOpt from './components/search.vue';
 import { router } from '@/router';
 import { PopTip } from '@/utils/tip';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const state = reactive({
   links: [],
   search: {
@@ -77,13 +79,13 @@ const state = reactive({
     size: 20,
     read: '0',
   },
-  loading: false
+  loading: false,
 });
 
 watch(
   () => router.currentRoute.value.query.keyword,
   val => {
-    state.search.keyword = val
+    state.search.keyword = val;
   }
 );
 watch(
@@ -101,7 +103,7 @@ onBeforeMount(() => {
 });
 
 function loadLinks() {
-  state.loading = true
+  state.loading = true;
   linkPagination({ ...state.search })
     .then(res => {
       const {
@@ -109,7 +111,7 @@ function loadLinks() {
         data: { links, search },
       } = res.data;
       if (!status) {
-        throw new Error('获取链接失败');
+        throw new Error(t('lang.message.faield.get'));
       }
       state.links.length = 0;
       state.links.push(...links);
@@ -119,7 +121,7 @@ function loadLinks() {
     .catch(err => {
       console.log(err);
     })
-    .finally(()=> state.loading = false);
+    .finally(() => (state.loading = false));
 }
 
 function onRead(link) {
@@ -154,9 +156,9 @@ function onMarkLink(read) {
       const { status, msg } = res.data;
       if (status) {
         loadLinks();
-        PopTip.success('标记成功');
+        PopTip.success(t('lang.message.success.update'));
       } else {
-        PopTip.success('标记失败');
+        PopTip.success(t('lang.message.failed.update'));
       }
     })
     .catch(err => {

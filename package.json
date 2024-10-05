@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "serve:pro": "vue-cli-service serve --mode production",
+    "serve": "vue-cli-service serve --mode development",
+    "serve:prod": "vue-cli-service serve --mode production",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "build": "vue-cli-service build --mode production",
@@ -22,6 +22,7 @@
     "sass": "^1.79.3",
     "sass-loader": "^16.0.2",
     "vue": "^3.2.13",
+    "vue-i18n": "^9.14.1",
     "vue-router": "^4.4.5"
   },
   "devDependencies": {
@@ -30,6 +31,7 @@
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "copy-webpack-plugin": "^12.0.2",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3"
   },

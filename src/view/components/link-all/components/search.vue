@@ -4,7 +4,7 @@
       id="keyword"
       type="text"
       value=""
-      placeholder="搜索"
+      :placeholder="$t('lang.page.link-all.search.placeholder')"
       v-model="state.keywordValue"
       v-focus
       @input="onInput"
