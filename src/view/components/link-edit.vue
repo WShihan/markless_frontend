@@ -3,27 +3,27 @@
     <div class="form">
       <div class="form-item">
         <details open>
-          <summary>书签信息</summary>
+          <summary>{{ $t('lang.page.link-edit.summary.info') }}</summary>
           <div class="form-item">
-            <label for="desc">链接</label>
+            <label for="desc">{{ $t('lang.page.link-edit.label.url') }}</label>
             <input name="desc" v-model="state.link.url" />
           </div>
           <div class="form-item">
-            <label for="desc">标题</label>
+            <label for="desc">{{ $t('lang.page.link-edit.label.title') }}</label>
             <input name="desc" v-model="state.link.title" />
           </div>
           <div class="form-item">
-            <label for="desc">描述</label>
+            <label for="desc">{{ $t('lang.page.link-edit.label.desc') }}</label>
             <textarea name="desc" v-model="state.link.desc" style="min-height: 7em"></textarea>
           </div>
           <div class="form-item">
-            <label for="read">阅读</label>
+            <label for="read">{{ $t('lang.page.link-edit.label.read') }}</label>
             <el-switch v-model="state.link.read"></el-switch>
           </div>
           <div class="form-item">
-            <el-popconfirm title="确定更新吗？" @confirm="onUpdateInfo">
+            <el-popconfirm :title="$t('lang.confirm.update')" @confirm="onUpdateInfo">
               <template #reference>
-                <button class="submit" :disabled="btnActive">更新信息</button>
+                <button class="submit" :disabled="btnActive">{{ $t('lang.submit.update') }}</button>
               </template>
             </el-popconfirm>
           </div>
@@ -31,9 +31,9 @@
       </div>
       <div class="form-item tags">
         <details>
-          <summary>标签</summary>
+          <summary>{{ $t('lang.page.link-edit.summary.tag') }}</summary>
           <div class="form-item">
-            <label for="标签">标签</label>
+            <label>{{ $t('lang.page.link-edit.label.tag') }}</label>
             <el-select
               v-model="state.selectedTags"
               multiple
@@ -41,7 +41,7 @@
               allow-create
               default-first-option
               :reserve-keyword="false"
-              placeholder="选择标签"
+              :placeholder="$t('lang.page.link-edit.placeholder')"
               style="width: 100%; min-height: 4em"
             >
               <el-option v-for="(item, i) in state.tags" :key="i" :label="item" :value="item" />
@@ -50,7 +50,7 @@
           <div class="form-item">
             <el-popconfirm title="确定更新吗？" @confirm="onUpdateTags">
               <template #reference>
-                <button class="submit">更新标签</button>
+                <button class="submit">{{ $t('lang.submit.update') }}</button>
               </template>
             </el-popconfirm>
           </div>
@@ -70,7 +70,9 @@ import { linkUpdate } from '@/api';
 import { PopTip } from '@/utils/tip';
 import { onBeforeMount } from 'vue';
 import router from '@/router';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const state = reactive({
   link: {
     url: '',
@@ -111,10 +113,10 @@ function loadLink() {
           state.selectedTags.length = 0;
           state.selectedTags.push(...data.tags.map(item => item.name));
         } else {
-          throw `获取书签信息失败：${msg}`;
+          throw `${t('lang.message.error')}${msg}`;
         }
       } else {
-        throw '获取书签信息失败';
+        throw t('lang.page.link-edit.tip.link-info-get-failed');
       }
     })
     .catch(err => {
@@ -134,10 +136,10 @@ function onUpdateInfo() {
       if (res.data) {
         const { status, msg } = res.data;
         if (status) {
-          PopTip.success('修改成功');
+          PopTip.success(t('lang.page.link-edit.tip.link-info-update-success'));
           loadLink();
-        } else throw '修改失败：' + msg;
-      } else throw '修改失败';
+        } else throw msg;
+      } else throw t('lang.page.link-edit.tip.link-info-update-failed');
     })
     .catch(err => {
       PopTip.warning(err);
@@ -145,36 +147,24 @@ function onUpdateInfo() {
     });
 }
 
-function onUpdateTags(){
-    linkAttachTags(state.link.id, state.selectedTags).then(res =>{
-        if(res.data){
-            const {status, msg} = res.data
-            if(status){
-                PopTip.success('更新成功')
-                loadLink();
-            } else throw('更新失败：' + msg)
-        } else throw('更新失败')
-    }).catch(err =>{
-        console.log(err)
-        PopTip.warning(err)
+function onUpdateTags() {
+  linkAttachTags(state.link.id, state.selectedTags)
+    .then(res => {
+      if (res.data) {
+        const { status, msg } = res.data;
+        if (status) {
+          PopTip.success(t('lang.page.link-edit.tip.link-tag-update-success'));
+          loadLink();
+        } else throw msg;
+      } else throw t('lang.page.link-edit.tip.link-tag-update-failed');
     })
+    .catch(err => {
+      console.log(err);
+      PopTip.warning(err);
+    });
 }
 </script>
 
 <style scoped lang="scss">
-.form {
-  .form-item {
-    display: flex;
-    margin: 1em 0em;
-    label {
-      min-width: 4em;
-    }
-    details {
-      flex: 1;
-    }
-    summary {
-      cursor: pointer;
-    }
-  }
-}
+
 </style>

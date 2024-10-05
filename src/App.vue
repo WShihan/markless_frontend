@@ -1,11 +1,35 @@
 <template>
-  <el-config-provider :locale="zhCn">
+  <el-config-provider :locale="activeLang">
     <router-view></router-view>
   </el-config-provider>
 </template>
 
 <script setup>
-import zhCn from 'element-plus/es/locale/lang/zh-cn';
+import { watch } from 'vue';
+import { computed } from 'vue';
+import store from './store';
+
+import zhCN from 'element-plus/es/locale/lang/zh-cn';
+import zhTW from 'element-plus/es/locale/lang/zh-tw';
+import en from 'element-plus/es/locale/lang/en';
+
+watch(
+  () => store.getLang,
+  val => {
+    console.log(val);
+  }
+);
+let activeLang = computed(() => {
+  const lang = store.getLang();
+  switch(lang){
+    case 'en':
+      return en;
+    case 'zh-TW':
+      return zhTW;
+    default:
+      return zhCN;
+  }
+});
 </script>
 
 <style>

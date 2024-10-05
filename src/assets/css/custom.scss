@@ -82,6 +82,20 @@ details {
   border-radius: 0.5em;
   background-color: $--input-bg-color;
 }
+.form-item {
+  display: flex;
+  margin: 1em 0em;
+  gap: .5em;
+  label {
+    min-width: 4em;
+  }
+  details {
+    flex: 1;
+  }
+  summary {
+    cursor: pointer;
+  }
+}
 button {
   appearance: none;
   padding: 0.5em;
@@ -145,7 +159,7 @@ html {
     padding: 0.5em;
     margin: 1em auto;
     box-sizing: border-box;
-    border-radius: .2em;
+    border-radius: 0.2em;
     overflow: auto;
   }
 }

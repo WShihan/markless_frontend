@@ -1,99 +1,102 @@
 <template>
   <div class="panel">
-    <div  class="login-form" v-loading="loading">
+    <div class="login-form" v-loading="state.loading">
       <div class="form">
         <div class="form-item">
-          <label for="username">用户名</label>
-          <input type="text" name="username" id="username" v-model="loginForm.username" />
+          <label for="username">{{ $t('lang.page.login.label.username') }}</label>
+          <input type="text" name="username" id="username" v-model="state.loginForm.username" />
         </div>
         <div class="form-item">
-          <label for="password">密码</label>
-          <input type="password" name="password" id="password" v-model="loginForm.password" />
+          <label for="password">{{ $t('lang.page.login.label.password') }}</label>
+          <input type="password" name="password" id="password" v-model="state.loginForm.password" />
+        </div>
+        <details>
+          <summary>{{ $t('lang.page.setting.label.lang') }}</summary>
+          <langSwitch v-model:lang="state.loginForm.lang" @change="onLangChange" />
+        </details>
+        <div class="form-item">
+          <a class="icon" @click.prevent="$router.push('/register')">
+            {{ $t('lang.page.login.label.to-register') }}
+          </a>
         </div>
         <div class="form-item">
-          <a class="icon" @click.prevent="$router.push('/register')">去注册</a>
-        </div>
-        <div class="form-item">
-          <button @click="handleLogin" class="submit">登录</button>
+          <button @click="handleLogin" class="submit">{{ $t('lang.submit.login') }}</button>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
+import langSwitch from '@/components/lang-switch.vue';
 import { userLogin } from '@/api';
 import { PopTip } from '@/utils/tip';
-import {store} from '@/store'
-import {setCookie} from '@/utils/cookieJar'
+import { store } from '@/store';
+import { getCookie, setCookie } from '@/utils/cookieJar';
+import { useI18n } from 'vue-i18n';
+import { reactive } from 'vue';
+import router from '@/router';
 
+const { t, locale } = useI18n();
 let tokenStore = store;
-
-export default {
-  name: 'Login',
-  data() {
-    return {
-      loginForm: {
-        username: process.env.VUE_APP_USER,
-        password: process.env.VUE_APP_USERPASS,
-      },
-      registerForm: {
-        username: '',
-        password: '',
-        'password-confirm': '',
-      },
-      loading: false,
-    };
+const state = reactive({
+  loginForm: {
+    username: process.env.VUE_APP_USER,
+    password: process.env.VUE_APP_USERPASS,
+    lang: getCookie('markless-lang') || 'zh-CN',
   },
-  methods: {
-    validateUsername() {
-      if ((this.loginForm.username.length <= 2) & (this.loginForm.username === '')) {
-        PopTip.warning('用户名不正确');
-        return false;
-      } else return true;
-    },
+  loading: false,
+});
 
-    validatePassword() {
-      if ((this.loginForm.password.length <= 3) & (this.loginForm.password === '')) {
-        PopTip.warning('密码长度小于8位');
-        return false;
-      } else return true;
-    },
-    clear(){
-      this.loginForm.username = ''
-      this.loginForm.password = ''
-    },
+function onLangChange(lang) {
+  store.setLang(lang);
+  locale.value = lang;
+}
+function validateUsername() {
+  if ((state.loginForm.username.length <= 2) & (state.loginForm.username === '')) {
+    PopTip.warning(t('lang.page.login.tip.username-invalid'));
+    return false;
+  } else return true;
+}
+function validatePassword() {
+  if ((state.loginForm.password.length <= 8) & (state.loginForm.password === '')) {
+    PopTip.warning(t('lang.page.login.tip.password-invalid'));
+    return false;
+  } else return true;
+}
 
-    handleLogin() {
-      if (this.validatePassword() && this.validateUsername()) {
-        this.loading = true;
-        userLogin(this.loginForm)
-          .then(res => {
-            const {status, data} = res.data
-            if (status) {
-              PopTip.success("登陆成功");
-              tokenStore.setToken(data['access_token'])
-              setCookie('lang', data.lang)
-              this.$router.push({
-                path: this.$route.query.redirect || '/',
-              });
-            } else {
-              throw res.data.msg;
-            }
-          })
-          .catch(err => {
-            console.error(err);
-            PopTip.error('登陆错误！');
-          })
-          .finally(() => {
-            this.loading = false;
+function clear() {
+  state.loginForm.username = '';
+  state.loginForm.password = '';
+}
+
+function handleLogin() {
+  if (validatePassword() && validateUsername()) {
+    state.loading = true;
+    userLogin(state.loginForm)
+      .then(res => {
+        const { status, data } = res.data;
+        if (status) {
+          tokenStore.setToken(data['access_token']);
+          setCookie('markless-lang', data.lang);
+          setCookie('markless-theme', data.theme);
+          router.push({
+            path: router.currentRoute.value.query.redirect || '/',
           });
-      }
-    },
-  },
-};
+        } else {
+          throw res.data.msg;
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        PopTip.error(err);
+      })
+      .finally(() => {
+        state.loading = false;
+      });
+  }
+}
 </script>
-
 <style scoped lang="scss">
 * {
   padding: 0;
@@ -113,18 +116,6 @@ export default {
     padding: 1em 0.7813rem;
     margin: 1em auto;
     border-radius: 0.1563rem;
-    .form-item {
-      display: flex;
-      gap: 0.5em;
-      margin: 1em 0em;
-      label {
-        min-width:4em;
-      }
-      button {
-        flex: 1;
-        margin: 1em 0em;
-      }
-    }
   }
 }
 </style>

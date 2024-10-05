@@ -2,54 +2,29 @@
   <div class="setting page">
     <div class="form">
       <details>
-        <summary>用户信息</summary>
+        <summary>{{ $t('lang.page.setting.summary.user') }}</summary>
         <div class="form-item">
-          <label for="username">用户名</label>
+          <label for="username">{{ $t('lang.page.setting.label.username') }}</label>
           <input class="disable" type="text" readonly v-model="state.info.user.username" />
         </div>
         <div class="form-item">
-          <label for="username">管理员</label>
+          <label for="username">{{ $t('lang.page.setting.label.admin') }}</label>
           <el-switch v-model="state.info.user.admin" readonly />
         </div>
+        <langSwitch v-model:lang="state.info.user.lang" />
         <div class="form-item">
-          <label for="lang">语言</label>
-          <select v-model="state.info.user.lang">
-            <option value="en" label="英文"></option>
-            <option value="zh-TW" label="中文繁体"></option>
-            <option value="zh-CN" label="中文简体"></option>
-          </select>
-        </div>
-        <div class="form-item">
-          <label for="lang">主题</label>
+          <label for="lang">{{ $t('lang.page.setting.label.theme') }}</label>
           <select v-model="state.info.user.theme">
-            <option value="normal" label="明亮"></option>
-            <option value="dark" label="黑暗"></option>
+            <option value="normal" :label="$t('lang.page.setting.label.theme-opt.normal')"></option>
+            <option value="dark" :label="$t('lang.page.setting.label.theme-opt.dark')"></option>
           </select>
         </div>
         <div class="form-item">
-          <button class="submit" @click.prevent="onUpdateUserInfo">更新</button>
-        </div>
-      </details>
-    </div>
-    <div class="form">
-      <details>
-        <summary>密码</summary>
-        <div class="form-item">
-          <label for="password">旧密码</label>
-          <input type="password" name="password" v-model="state.info.password.origin" />
-        </div>
-        <div class="form-item">
-          <label for="lang">新密码</label>
-          <input type="password" name="password-new" v-model="state.info.password.current" />
-        </div>
-        <div class="form-item">
-          <label for="lang">确认密码</label>
-          <input type="password" name="password-confirm" v-model="state.info.password.confirm" />
-        </div>
-        <div class="form-item">
-          <el-popconfirm title="确定删除吗？" @confirm="onUpdatePassword">
+          <el-popconfirm :title="$t('lang.confirm.update')" @confirm="onUpdateUserInfo">
             <template #reference>
-              <button class="submit">更新</button>
+              <button class="submit">
+                {{ $t('lang.submit.update') }}
+              </button>
             </template>
           </el-popconfirm>
         </div>
@@ -57,19 +32,43 @@
     </div>
     <div class="form">
       <details>
-        <summary>密钥</summary>
+        <summary>{{ $t('lang.page.setting.summary.password') }}</summary>
+        <div class="form-item">
+          <label for="password">{{ $t('lang.page.setting.label.password-now') }}</label>
+          <input type="password" name="password" v-model="state.info.password.origin" />
+        </div>
+        <div class="form-item">
+          <label for="lang">{{ $t('lang.page.setting.label.password-new') }}</label>
+          <input type="password" name="password-new" v-model="state.info.password.current" />
+        </div>
+        <div class="form-item">
+          <label for="lang">{{ $t('lang.page.setting.label.password-confirm') }}</label>
+          <input type="password" name="password-confirm" v-model="state.info.password.confirm" />
+        </div>
+        <div class="form-item">
+          <el-popconfirm :title="$t('lang.confirm.update')" @confirm="onUpdatePassword">
+            <template #reference>
+              <button class="submit">{{ $t('lang.submit.update') }}</button>
+            </template>
+          </el-popconfirm>
+        </div>
+      </details>
+    </div>
+    <div class="form">
+      <details>
+        <summary>{{ $t('lang.page.setting.summary.token') }}</summary>
         <div class="form-item">
           <input type="text" readonly name="token" v-model="state.info.user.token" />
         </div>
         <div class="form-item">
-          <el-popconfirm title="确定更新吗？" @confirm="onTokenRefresh">
+          <el-popconfirm :title="$t('lang.confirm.update')" @confirm="onTokenRefresh">
             <template #reference>
-              <button class="submit">更新</button>
+              <button class="submit">{{ $t('lang.submit.update') }}</button>
             </template>
           </el-popconfirm>
           <el-popconfirm title="确定删除吗？" @confirm="onTokenDel">
             <template #reference>
-              <button class="submit danger">删除</button>
+              <button class="submit danger">{{ $t('lang.submit.delete') }}</button>
             </template>
           </el-popconfirm>
         </div>
@@ -77,21 +76,21 @@
     </div>
     <div class="form">
       <details open>
-        <summary>应用信息</summary>
+        <summary>{{ $t('lang.page.setting.summary.env') }}</summary>
         <div class="form-item">
-          <label for="password">根路由</label>
+          <label for="password">{{ $t('lang.page.setting.label.base-url') }}</label>
           <input class="disable" type="text" readonly v-model="state.info.env.base_url" />
         </div>
         <div class="form-item">
-          <label for="password">版本</label>
+          <label for="password">{{ $t('lang.page.setting.label.version') }}</label>
           <input class="disable" type="text" readonly v-model="state.info.env.version" />
         </div>
         <div class="form-item">
-          <label for="password">GIT</label>
+          <label for="password">{{ $t('lang.page.setting.label.git-id') }}</label>
           <input class="disable" type="text" readonly v-model="state.info.env.commit" />
         </div>
         <div class="form-item">
-          <label for="password">构建时间</label>
+          <label for="password">{{ $t('lang.page.setting.label.build-time') }}</label>
           <input class="disable" type="text" readonly v-model="state.info.env.build_time" />
         </div>
       </details>
@@ -102,7 +101,6 @@
 <script setup>
 import { reactive } from 'vue';
 import { onBeforeMount } from 'vue';
-import { watch } from 'vue';
 import { userInfo } from '@/api';
 import { userEnv } from '@/api';
 import { userinfoUpdate } from '@/api';
@@ -113,6 +111,10 @@ import { PopTip } from '@/utils/tip';
 import store from '@/store';
 import router from '@/router';
 import { getCookie, setCookie } from '@/utils/cookieJar';
+import langSwitch from '@/components/lang-switch.vue';
+import { useI18n } from 'vue-i18n';
+
+const { t, locale } = useI18n();
 
 const state = reactive({
   info: {
@@ -141,13 +143,6 @@ const state = reactive({
 onBeforeMount(() => {
   initialInfo();
 });
-watch(
-  () => state.info.user.theme,
-  val => {
-    setCookie('markless-theme', val);
-    document.location.reload();
-  }
-);
 function initialInfo() {
   userInfo().then(res => {
     const { status, data } = res.data ? res.data : {};
@@ -167,6 +162,9 @@ function onUpdateUserInfo() {
   userinfoUpdate(state.info.user).then(res => {
     const { status, data } = res.data;
     if (status) {
+      store.setLang(state.info.user.lang);
+      store.setTheme(state.info.user.theme);
+      locale.value = state.info.user.lang;
       PopTip.success('更新成功');
     } else {
       PopTip.warning('更新失败');
@@ -226,17 +224,6 @@ function onUpdatePassword() {
   margin: 1em auto;
   summary {
     cursor: pointer;
-  }
-  .form-item {
-    display: flex;
-    gap: 0.5em;
-    margin: 1em 0em;
-    label {
-      min-width: 4em;
-    }
-    details {
-      flex: 1;
-    }
   }
 }
 </style>

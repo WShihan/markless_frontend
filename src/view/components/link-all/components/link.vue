@@ -66,7 +66,7 @@
             p-id="1163"
           ></path>
         </svg>
-        <span class="label">标为未阅</span>
+        <span class="label">{{ $t('lang.link.label.unread') }}</span>
       </a>
       <a v-else @click.prevent="readLink">
         <svg
@@ -110,7 +110,7 @@
             p-id="1163"
           ></path>
         </svg>
-        <span class="label">标为已阅</span>
+        <span class="label">{{ $t('lang.link.label.read') }}</span>
       </a>
       <span class="gap">｜</span>
       <a @click.prevent="editLink">
@@ -135,7 +135,7 @@
             p-id="951"
           ></path>
         </svg>
-        <span class="label">编辑</span>
+        <span class="label">{{ $t('lang.link.label.edit') }}</span>
       </a>
       <span class="gap">｜</span>
       <a class="btn" @click.prevent="copyLink">
@@ -160,7 +160,7 @@
             p-id="1258"
           ></path>
         </svg>
-        <span class="label">复制链接</span>
+        <span class="label">{{ $t('lang.link.label.copy') }}</span>
       </a>
       <span class="gap">｜</span>
       <a @click.prevent="archiveLink">
@@ -185,11 +185,11 @@
             p-id="2242"
           ></path>
         </svg>
-        <span class="label">快照</span>
+        <span class="label">{{ $t('lang.link.label.archive') }}</span>
       </a>
       <span class="gap">｜</span>
 
-      <el-popconfirm title="确定删除吗？" @confirm="deleteLink">
+      <el-popconfirm :title="$t('lang.confirm.delete')" @confirm="deleteLink">
         <template #reference>
           <a>
             <svg
@@ -213,7 +213,7 @@
                 fill="#1296db"
               ></path>
             </svg>
-            <span class="label">删除</span>
+            <span class="label">{{ $t('lang.link.label.delete') }}</span>
           </a>
         </template>
       </el-popconfirm>
@@ -230,7 +230,9 @@ import { linkUnread } from '@/api';
 import { PopTip } from '@/utils/tip';
 import { parseDate } from '@/utils/tool';
 import router from '@/router';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const props = defineProps({
   link: {
     type: Object,
@@ -257,12 +259,10 @@ function viewLink(evt) {
 function copyLink(evt) {
   emit('copy', props.link);
   window.navigator.clipboard.writeText(props.link.url).then(() => {
-    evt.target.lastChild.innerText = '复制成功';
-    PopTip.success('复制成功');
-    console.log(`copy:${props.link.url}`);
+    evt.target.lastChild.innerText = t('lang.link.label.copy') + t('lang.message.success.common');
     emit('copy', props.link);
     setTimeout(() => {
-      evt.target.lastChild.innerText = '复制链接';
+      evt.target.lastChild.innerText = t('lang.link.label.copy');
     }, 3000);
   });
 }
@@ -272,16 +272,16 @@ function deleteLink(evt) {
     const { status } = res.data;
     if (status) {
       emit('delete', props.link);
-      PopTip.success('删除成功');
+      PopTip.success(t('lang.message.success.delete'));
     } else {
-      PopTip.info('删除失败！');
+      PopTip.info(t('lang.message.error.delete'));
     }
   });
 }
 
 function archiveLink() {
   emit('archive', props.link);
-  router.push({name: 'link-archive', query:{id: props.link.id}})
+  router.push({ name: 'link-archive', query: { id: props.link.id } });
 }
 
 function unreadLink() {
@@ -289,9 +289,11 @@ function unreadLink() {
     const { status } = res.data;
     if (status) {
       emit('unread', props.link);
-      PopTip.success('标记未阅成功');
+      PopTip.success(t('lang.link.label.unread') + t('lang.message.success.common'));
+
     } else {
-      PopTip.info('标记未阅失败');
+      PopTip.info(t('lang.link.label.unread') + t('lang.message.error.common'));
+
     }
   });
   emit('unread', props.link);
@@ -302,9 +304,9 @@ function readLink() {
     const { status } = res.data;
     if (status) {
       emit('read', props.link);
-      PopTip.success('标记已阅成功');
+      PopTip.success(t('lang.link.label.read') + t('lang.message.success.common'));
     } else {
-      PopTip.info('标记已阅失败');
+      PopTip.info(t('lang.link.label.read') + t('lang.message.error.common'));
     }
   });
   emit('read', props.link);
@@ -312,10 +314,8 @@ function readLink() {
 
 function editLink() {
   emit('edit', props.link);
-  router.push({name: 'link-edit', query:{'id': props.link.id}})
+  router.push({ name: 'link-edit', query: { id: props.link.id } });
 }
-
-
 </script>
 
 <style scoped lang="scss">

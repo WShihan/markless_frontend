@@ -3,17 +3,17 @@
     <div class="form">
       <div class="form-item">
         <details open>
-          <summary>快照信息</summary>
+          <summary>{{ $t('lang.page.link-archive.summary') }}</summary>
           <div class="form-item">
-            <label for="desc">链接</label>
+            <label for="desc">{{ $t('lang.page.link-archive.label.url') }}</label>
             <input class="disable" readonly name="desc" v-model="state.link.url" />
           </div>
           <div class="form-item">
-            <label for="desc">标题</label>
+            <label for="desc">{{ $t('lang.page.link-archive.label.title') }}</label>
             <input class="disable" readonly name="desc" v-model="state.link.title" />
           </div>
           <div class="form-item">
-            <label for="desc">描述</label>
+            <label for="desc">{{ $t('lang.page.link-archive.label.desc') }}</label>
             <textarea
               class="disable"
               readonly
@@ -23,14 +23,14 @@
             ></textarea>
           </div>
           <div class="form-item">
-            <label for="tag">标签</label>
+            <label for="tag">{{ $t('lang.page.link-archive.label.tag') }}</label>
             <span class="tag-v" v-for="(tag, i) in state.link.tags" :key="i">#{{ tag.name }}</span>
           </div>
           <div class="form-item">
-            <el-popconfirm title="确定更新吗？" @confirm="onUpdateInfo">
+            <el-popconfirm :title="$t('lang.confirm.update')" @confirm="onUpdateInfo">
               <template #reference>
                 <button class="submit" :disabled="btnActive">
-                  {{ state.link.archive ? '更新' : '生成' }}
+                  {{ state.link.archive ? $t('lang.submit.update') : $t('lang.submit.create') }}
                 </button>
               </template>
             </el-popconfirm>
@@ -54,7 +54,9 @@ import { linkUpdateArchive } from '@/api';
 import { PopTip } from '@/utils/tip';
 import { onBeforeMount } from 'vue';
 import router from '@/router';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const state = reactive({
   link: {
     url: '',
@@ -83,10 +85,10 @@ function loadLink() {
         if (status) {
           Object.assign(state.link, data);
         } else {
-          throw `获取书签信息失败：${msg}`;
+          throw `${msg}`;
         }
       } else {
-        throw '获取书签信息失败';
+        throw t('lang.page.link-archive.tip.info-get-failed');
       }
     })
     .catch(err => {
@@ -100,10 +102,10 @@ function onUpdateInfo() {
       if (res.data) {
         const { status, msg } = res.data;
         if (status) {
-          PopTip.success('更新成功');
+          PopTip.success(t('lang.message.success.update'));
           loadLink();
-        } else throw '更新失败：' + msg;
-      } else throw '更新失败';
+        } else throw  msg;
+      } else throw t('lang.message.failed.update');
     })
     .catch(err => {
       PopTip.warning(err);
@@ -113,22 +115,5 @@ function onUpdateInfo() {
 </script>
 
 <style scoped lang="scss">
-.form {
-  .form-item {
-    display: flex;
-    margin: 1em 0em;
-    label {
-      min-width: 4em;
-    }
-    details {
-      flex: 1;
-    }
-    summary {
-      cursor: pointer;
-    }
-    .tag-v {
-      margin: 0em 1em;
-    }
-  }
-}
+
 </style>
