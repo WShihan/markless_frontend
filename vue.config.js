@@ -1,11 +1,11 @@
-const { defineConfig } = require('@vue/cli-service')
+const { defineConfig } = require('@vue/cli-service');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-
+const path = require('path');
 
 module.exports = defineConfig({
   transpileDependencies: true,
   lintOnSave: false,
-  publicPath:'./',
+  publicPath: './',
   assetsDir: './static',
   productionSourceMap: false,
   css: {
@@ -15,14 +15,17 @@ module.exports = defineConfig({
       },
     },
   },
-  configureWebpack:{
-    plugins:[
+  configureWebpack: {
+    plugins: [
       new CopyWebpackPlugin({
-        patterns: [
-          { from: 'src/config.js', to: 'static/js/config.js' },
-        ],
+        patterns: [{ from: 'src/config.js', to: 'static/js/config.js' }],
       }),
-    ]
+    ],
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, 'src'),
+      },
+    },
   },
   chainWebpack(config) {
     if (process.env.NODE_ENV === 'production') {
@@ -30,5 +33,5 @@ module.exports = defineConfig({
         .plugin('webpack-bundle-analyzer')
         .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin);
     }
-  }
-})
+  },
+});
