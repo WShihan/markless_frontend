@@ -1,6 +1,6 @@
 
 import { createApp } from 'vue';
-import Loading from '@/directives/loading.vue';
+import Loading from '@/components/loading.vue';
 
 const loadDirective = {};
 loadDirective.install = Vue => {
