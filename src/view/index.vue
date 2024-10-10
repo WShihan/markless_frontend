@@ -16,8 +16,8 @@
 </template>
 
 <script setup>
-import Header from './components/header.vue';
-import TagDock from './components/tag-dock.vue';
+import Header from '@/view/components/header.vue';
+import TagDock from '@/view/components/tag-dock.vue';
 </script>
 
 <style scoped lang="scss">
