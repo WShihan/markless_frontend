@@ -8,7 +8,7 @@
         </div>
         <div class="form-item">
           <label for="password">{{ $t('lang.page.login.label.password') }}</label>
-          <input type="password" name="password" id="password" v-model="state.loginForm.password" />
+          <input type="password" name="password" id="password" v-model="state.loginForm.password" @keyup="onKeyup" />
         </div>
         <details>
           <summary>{{ $t('lang.page.setting.label.lang') }}</summary>
@@ -20,7 +20,7 @@
           </a>
         </div>
         <div class="form-item">
-          <button @click="handleLogin" class="submit">{{ $t('lang.submit.login') }}</button>
+          <button @click="handleLogin"  class="submit">{{ $t('lang.submit.login') }}</button>
         </div>
       </div>
     </div>
@@ -69,7 +69,11 @@ function clear() {
   state.loginForm.username = '';
   state.loginForm.password = '';
 }
-
+function onKeyup(e) {
+  if (e.key === 'Enter') {
+    handleLogin();
+  }
+}
 function handleLogin() {
   if (validatePassword() && validateUsername()) {
     state.loading = true;

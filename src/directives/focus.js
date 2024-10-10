@@ -18,8 +18,5 @@ const Focus = {
   mounted(el) {
     focusEle(el);
   },
-  // updated(el){
-  //   focusEle(el);
-  // }
 };
 export default Focus;
