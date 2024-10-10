@@ -35,9 +35,11 @@ import { store } from '@/store';
 import { getCookie, setCookie } from '@/utils/cookieJar';
 import { useI18n } from 'vue-i18n';
 import { reactive } from 'vue';
-import router from '@/router';
+import {  useRouter,useRoute } from 'vue-router';
 
 const { t, locale } = useI18n();
+const router = useRouter();
+const route = useRoute();
 let tokenStore = store;
 const state = reactive({
   loginForm: {
@@ -85,7 +87,7 @@ function handleLogin() {
           setCookie('markless-lang', data.lang);
           setCookie('markless-theme', data.theme);
           router.push({
-            path: router.currentRoute.value.query.redirect || '/',
+            path: route.query.redirect || '/',
           });
         } else {
           throw res.data.msg;

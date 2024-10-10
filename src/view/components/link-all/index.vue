@@ -65,32 +65,36 @@ import { markReadState } from '@/api/index';
 import Pager from './components/pager.vue';
 import Link from './components/link.vue';
 import SearchOpt from './components/search.vue';
-import { router } from '@/router';
 import { PopTip } from '@/utils/tip';
 import { useI18n } from 'vue-i18n';
+import {  useRoute, useRouter } from 'vue-router';
 
+const route = useRoute();
+const router = useRouter();
 const { t } = useI18n();
 const state = reactive({
   links: [],
   search: {
     page: 1,
-    keyword: '',
+    keyword: route.query.keyword || '',
     count: 0,
     size: 20,
-    read: '0',
+    read: route.query.read || '2',
   },
   loading: false,
 });
 
 watch(
-  () => router.currentRoute.value.query.keyword,
+  () => route.query.keyword,
   val => {
     state.search.keyword = val;
   }
 );
+
 watch(
   () => state.search,
   () => {
+    router.push({query: {keyword: state.search.keyword, read: state.search.read}});
     loadLinks();
   },
   {

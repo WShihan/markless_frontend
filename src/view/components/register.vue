@@ -49,9 +49,11 @@ import langSwitch from '@/components/lang-switch.vue';
 import { getCookie } from '@/utils/cookieJar';
 import store from '@/store';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 
 
 const { t, locale } = useI18n();
+const router = useRouter();
 const state = reactive({
   registerForm: {
     username: '',
@@ -105,7 +107,7 @@ function handleRegister() {
         if (status) {
           PopTip.success(t('lang.message.success.register'));
           clear();
-          $route.push('/login');
+          router.push('/login');
           return;
         } else {
           throw res.data.msg;

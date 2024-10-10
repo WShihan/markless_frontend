@@ -109,13 +109,13 @@ import { userTokenRefresh } from '@/api';
 import { userPasswordUpdate } from '@/api';
 import { PopTip } from '@/utils/tip';
 import store from '@/store';
-import router from '@/router';
+import {  useRouter } from 'vue-router';
 import { getCookie, setCookie } from '@/utils/cookieJar';
 import langSwitch from '@/components/lang-switch.vue';
 import { useI18n } from 'vue-i18n';
 
 const { t, locale } = useI18n();
-
+const router = useRouter();
 const state = reactive({
   info: {
     user: {

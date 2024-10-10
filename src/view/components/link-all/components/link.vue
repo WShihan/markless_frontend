@@ -229,9 +229,10 @@ import { linkRead } from '@/api';
 import { linkUnread } from '@/api';
 import { PopTip } from '@/utils/tip';
 import { parseDate } from '@/utils/tool';
-import router from '@/router';
-import { useI18n } from 'vue-i18n';
+import {  useRouter } from 'vue-router';
 
+import { useI18n } from 'vue-i18n';
+const router = useRouter();
 const { t } = useI18n();
 const props = defineProps({
   link: {

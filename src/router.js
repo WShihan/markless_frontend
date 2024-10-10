@@ -27,13 +27,14 @@ export const routes = [
       title: 'Markless',
       keepAlive: true,
     },
-    redirect: 'link-all',
+    redirect: 'link-all?read=2',
     children: [
       {
         path: '/link-all',
         name: 'link-all',
         query: {
           keyword: '',
+          read: '2'
         },
         component: () => import('@/view/components/link-all/index.vue'),
         meta: { nav: true, title: '所有书签', keepAlive: true, loged: false },
