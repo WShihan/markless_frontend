@@ -90,7 +90,7 @@ import { PopTip } from '@/utils/tip';
 import { onBeforeMount } from 'vue';
 import { watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-
+import bus from 'vue3-eventbus'
 
 const { t } = useI18n();
 const state = reactive({
@@ -159,6 +159,7 @@ function onTagDelete() {
         state.tags.splice(idx, 1);
         state.activeTag = '';
       }
+      bus.emit('tags-update');
       PopTip.success(t('lang.message.success.delete'));
     } else {
       PopTip.info(msg);
@@ -175,6 +176,7 @@ function onAddTag() {
       if (status) {
         PopTip.success(t('lang.message.success.add'));
         state.createdTag = '';
+        bus.emit('tags-update');
         onLoadTags();
       } else {
         PopTip.info(msg);
@@ -210,6 +212,7 @@ function onAttachLink() {
     .then(res => {
       const { status, msg } = res.data;
       if (status) {
+        bus.emit('tags-update');
         PopTip.success(t('lang.message.success.update'));
       } else {
         throw msg;

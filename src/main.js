@@ -6,6 +6,8 @@ import { registerElement } from '@/element';
 import directive from '@/directives';
 import { initI18n } from './i18n';
 import '@/config.js';
+import eventBus from 'vue3-eventbus'
+
 
 import '@/assets/css/variable.scss';
 import 'nprogress/nprogress.css';
@@ -19,6 +21,7 @@ const app = createApp(App);
 registerElement(app);
 app.use(directive);
 initI18n(app);
+app.use(eventBus);
 app.use(pinia);
 app.use(router);
 app.mount('#app');

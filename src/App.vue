@@ -5,7 +5,6 @@
 </template>
 
 <script setup>
-import { watch } from 'vue';
 import { computed } from 'vue';
 import store from './store';
 
@@ -13,15 +12,9 @@ import zhCN from 'element-plus/es/locale/lang/zh-cn';
 import zhTW from 'element-plus/es/locale/lang/zh-tw';
 import en from 'element-plus/es/locale/lang/en';
 
-watch(
-  () => store.getLang,
-  val => {
-    console.log(val);
-  }
-);
 let activeLang = computed(() => {
   const lang = store.getLang();
-  switch(lang){
+  switch (lang) {
     case 'en':
       return en;
     case 'zh-TW':
@@ -32,7 +25,7 @@ let activeLang = computed(() => {
 });
 </script>
 
-<style>
+<style lang="scss">
 * {
   margin: 0;
   padding: 0;

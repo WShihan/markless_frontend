@@ -20,7 +20,12 @@
       <span>{{ $t('lang.navs.tags') }}</span>
     </div>
     <div class="pair" v-for="(item, i) in state.stat">
-      <a class="icon" @click="$router.push({name: 'link-all', query:{keyword: '#' + item.name}})">{{ item.name }}</a>
+      <a
+        class="icon"
+        @click="$router.push({ name: 'link-all', query: { keyword: '#' + item.name } })"
+      >
+        {{ item.name }}
+      </a>
       <span class="count">
         <span class="icon">{{ item.count }}</span>
       </span>
@@ -30,22 +35,33 @@
 
 <script setup>
 import { onBeforeMount } from 'vue';
+import { onDeactivated } from 'vue';
 import { reactive } from 'vue';
 import { tagStastic } from '@/api';
+import bus from 'vue3-eventbus';
 
 const state = reactive({
   stat: {},
 });
+
 onBeforeMount(() => {
+  loadTagsInfo();
+  bus.on('tags-update', loadTagsInfo);
+});
+
+onDeactivated(() => bus.off('tags-update', loadTagsInfo));
+
+function loadTagsInfo() {
   tagStastic().then(res => {
     if (res) {
       const { status, data } = res.data;
       if (status) {
+        state.stat = {};
         Object.assign(state.stat, data);
       }
     }
   });
-});
+}
 </script>
 
 <style scoped lang="scss">

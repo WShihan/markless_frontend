@@ -21,6 +21,7 @@ import TagDock from './components/tag-dock.vue';
 </script>
 
 <style scoped lang="scss">
+
 .container {
   position: relative;
   display: flex;

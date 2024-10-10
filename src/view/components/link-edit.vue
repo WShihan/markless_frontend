@@ -71,6 +71,7 @@ import { PopTip } from '@/utils/tip';
 import { onBeforeMount } from 'vue';
 import router from '@/router';
 import { useI18n } from 'vue-i18n';
+import { bus } from 'vue3-eventbus';
 
 const { t } = useI18n();
 const state = reactive({
@@ -153,8 +154,9 @@ function onUpdateTags() {
       if (res.data) {
         const { status, msg } = res.data;
         if (status) {
-          PopTip.success(t('lang.page.link-edit.tip.link-tag-update-success'));
+          bus.emit('tags-update');
           loadLink();
+          PopTip.success(t('lang.page.link-edit.tip.link-tag-update-success'));
         } else throw msg;
       } else throw t('lang.page.link-edit.tip.link-tag-update-failed');
     })
@@ -165,6 +167,4 @@ function onUpdateTags() {
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

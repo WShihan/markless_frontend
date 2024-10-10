@@ -41,6 +41,9 @@ importers:
       vue-router:
         specifier: ^4.4.5
         version: 4.4.5(vue@3.5.8)
+      vue3-eventbus:
+        specifier: ^2.0.0
+        version: 2.0.0
     devDependencies:
       '@babel/core':
         specifier: ^7.12.16
@@ -2769,6 +2772,9 @@ packages:
     resolution: {integrity: sha512-DxiNidxSEK+tHG6zOIklvNOwm3hvCrbUrdtzY74U6HKTJxvIDfOUL5W5P2Ghd3DTkhhKPYGqeNUIh5qcM4YBfw==}
     engines: {node: '>=8'}
 
+  mitt@2.1.0:
+    resolution: {integrity: sha512-ILj2TpLiysu2wkBbWjAmww7TkZb65aiQO+DkVdUTBpBXq+MHYiETENkKFMtsJZX1Lf4pe4QOrTSjIfUwN5lRdg==}
+
   mkdirp@0.5.6:
     resolution: {integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==}
     hasBin: true
@@ -3874,6 +3880,9 @@ packages:
 
   vue-template-es2015-compiler@1.9.1:
     resolution: {integrity: sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==}
+
+  vue3-eventbus@2.0.0:
+    resolution: {integrity: sha512-AzgA5ShZqWy6zeuZbnwAOZDt/GHRcUwUEyNmUoOEK7MtwpjABXtyh1m6JHzcEulrRrxMgpI2qDFsjss3fYpYuw==}
 
   vue@3.5.8:
     resolution: {integrity: sha512-hvuvuCy51nP/1fSRvrrIqTLSvrSyz2Pq+KQ8S8SXCxTWVE0nMaOnSDnSOxV1eYmGfvK7mqiwvd1C59CEEz7dAQ==}
@@ -7173,6 +7182,8 @@ snapshots:
     dependencies:
       yallist: 4.0.0
 
+  mitt@2.1.0: {}
+
   mkdirp@0.5.6:
     dependencies:
       minimist: 1.2.8
@@ -8275,6 +8286,10 @@ snapshots:
       loader-utils: 1.4.2
 
   vue-template-es2015-compiler@1.9.1: {}
+
+  vue3-eventbus@2.0.0:
+    dependencies:
+      mitt: 2.1.0
 
   vue@3.5.8:
     dependencies:
