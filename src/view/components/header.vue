@@ -69,7 +69,7 @@ function handleNav(nav) {
 }
 
 function initialTheme() {
-  const theme = getCookie('markless-theme') || 'dark';
+  const theme = getCookie('markless-theme') || 'normal';
   const body = document.body;
   body.classList.add(theme);
 }

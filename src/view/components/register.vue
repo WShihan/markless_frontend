@@ -21,6 +21,7 @@
             type="password"
             name="password"
             id="password"
+            @keyup="onKeyup"
             v-model="state.registerForm['password-confirm']"
           />
         </div>
@@ -33,7 +34,7 @@
         </div>
 
         <div class="form-item">
-          <button class="submit" @click.prevent="handleRegister">{{ $t('lang.submit.register') }}</button>
+          <button class="submit" @click.prevent="handleRegister" >{{ $t('lang.submit.register') }}</button>
         </div>
       </div>
     </div>
@@ -83,6 +84,12 @@ function clear() {
   state.registerForm.username = '';
   state.registerForm['password-confirm'] = '';
   state.registerForm.password = '';
+}
+
+function onKeyup(e) {
+  if (e.key === 'Enter') {
+    handleRegister();
+  }
 }
 
 function handleRegister() {
