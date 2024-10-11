@@ -19,6 +19,10 @@
             <label for="read"> {{ $t('lang.page.link-add.label.read') }}</label>
             <el-switch v-model="state.link.read"></el-switch>
           </div>
+          <div class="form-item">
+            <label for="read"> {{ $t('lang.page.link-add.label.wbaas') }}</label>
+            <el-switch v-model="state.link.wbaas"></el-switch>
+          </div>
           <div class="form-item tags">
             <label > {{ $t('lang.page.link-add.label.tag') }}</label>
             <el-select
@@ -59,6 +63,7 @@ const state = reactive({
     desc: '',
     tags: '',
     read: false,
+    wbaas: false,
   },
   tags: [],
   selectedTags: [],

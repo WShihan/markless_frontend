@@ -1,14 +1,14 @@
 <template>
   <div class="form-item">
     <label for="lang">{{ $t('lang.page.setting.label.lang') }}</label>
-    <select v-model="state.langVal" @change="onChange">
-      <option
+    <el-select v-model="state.langVal" @change="onChange">
+      <el-option
         v-for="(item, i) in pros.langs"
         :label="$t(`lang.page.setting.label.lang-opt.${item}`)"
         :value="item"
         :key="i"
-      ></option>
-    </select>
+      />
+    </el-select>
   </div>
 </template>
 

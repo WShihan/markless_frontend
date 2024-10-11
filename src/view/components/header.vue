@@ -93,6 +93,7 @@ initialTheme();
       li {
         list-style: none;
         button {
+          font-size: 1.2em; 
           padding: 0.2em;
           appearance: none;
           outline: none;

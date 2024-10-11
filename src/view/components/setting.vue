@@ -1,81 +1,99 @@
 <template>
   <div class="setting page">
     <div class="form">
-      <details>
+      <details open>
         <summary>{{ $t('lang.page.setting.summary.user') }}</summary>
         <div class="form-item">
-          <label for="username">{{ $t('lang.page.setting.label.username') }}</label>
-          <input class="disable" type="text" readonly v-model="state.info.user.username" />
+          <details open>
+            <summary>{{ $t('lang.page.setting.summary.user-info') }}</summary>
+            <div class="form-item">
+              <label for="username">{{ $t('lang.page.setting.label.username') }}</label>
+              <input class="disable" type="text" readonly v-model="state.info.user.username" />
+            </div>
+            <div class="form-item">
+              <label for="username">{{ $t('lang.page.setting.label.wbaas') }}</label>
+              <input type="text"  v-model="state.info.user.wbaas"  placeholder="phantomjscloud key"/>
+            </div>
+            <div class="form-item" v-if="state.info.user.admin">
+              <label for="username">{{ $t('lang.page.setting.label.admin') }}</label>
+              <el-switch v-model="state.info.user.admin" readonly />
+            </div>
+            <langSwitch v-model:lang="state.info.user.lang" />
+            <div class="form-item">
+              <label for="lang">{{ $t('lang.page.setting.label.theme') }}</label>
+              <el-select v-model="state.info.user.theme">
+                <el-option
+                  value="normal"
+                  :label="$t('lang.page.setting.label.theme-opt.normal')"
+                />
+                <el-option value="dark" :label="$t('lang.page.setting.label.theme-opt.dark')"/>
+              </el-select>
+            </div>
+            <div class="form"></div>
+            <div class="form-item">
+              <el-popconfirm :title="$t('lang.confirm.update')" @confirm="onUpdateUserInfo">
+                <template #reference>
+                  <button class="submit">
+                    {{ $t('lang.submit.update') }}
+                  </button>
+                </template>
+              </el-popconfirm>
+            </div>
+          </details>
         </div>
         <div class="form-item">
-          <label for="username">{{ $t('lang.page.setting.label.admin') }}</label>
-          <el-switch v-model="state.info.user.admin" readonly />
+          <details>
+            <summary>{{ $t('lang.page.setting.summary.token') }}</summary>
+            <div class="form-item">
+              <input type="text" readonly name="token" v-model="state.info.user.token" />
+            </div>
+            <div class="form-item">
+              <el-popconfirm :title="$t('lang.confirm.update')" @confirm="onTokenRefresh">
+                <template #reference>
+                  <button class="submit">{{ $t('lang.submit.update') }}</button>
+                </template>
+              </el-popconfirm>
+              <el-popconfirm title="确定删除吗？" @confirm="onTokenDel">
+                <template #reference>
+                  <button class="submit danger">{{ $t('lang.submit.delete') }}</button>
+                </template>
+              </el-popconfirm>
+            </div>
+          </details>
         </div>
-        <langSwitch v-model:lang="state.info.user.lang" />
-        <div class="form-item">
-          <label for="lang">{{ $t('lang.page.setting.label.theme') }}</label>
-          <select v-model="state.info.user.theme">
-            <option value="normal" :label="$t('lang.page.setting.label.theme-opt.normal')"></option>
-            <option value="dark" :label="$t('lang.page.setting.label.theme-opt.dark')"></option>
-          </select>
-        </div>
-        <div class="form-item">
-          <el-popconfirm :title="$t('lang.confirm.update')" @confirm="onUpdateUserInfo">
-            <template #reference>
-              <button class="submit">
-                {{ $t('lang.submit.update') }}
-              </button>
-            </template>
-          </el-popconfirm>
+        <div class="form">
+          <details>
+            <summary>{{ $t('lang.page.setting.summary.password') }}</summary>
+            <div class="form-item">
+              <label for="password">{{ $t('lang.page.setting.label.password-now') }}</label>
+              <input type="password" name="password" v-model="state.info.password.origin" />
+            </div>
+            <div class="form-item">
+              <label for="lang">{{ $t('lang.page.setting.label.password-new') }}</label>
+              <input type="password" name="password-new" v-model="state.info.password.current" />
+            </div>
+            <div class="form-item">
+              <label for="lang">{{ $t('lang.page.setting.label.password-confirm') }}</label>
+              <input
+                type="password"
+                name="password-confirm"
+                v-model="state.info.password.confirm"
+              />
+            </div>
+            <div class="form-item">
+              <el-popconfirm :title="$t('lang.confirm.update')" @confirm="onUpdatePassword">
+                <template #reference>
+                  <button class="submit">{{ $t('lang.submit.update') }}</button>
+                </template>
+              </el-popconfirm>
+            </div>
+          </details>
         </div>
       </details>
     </div>
+
     <div class="form">
       <details>
-        <summary>{{ $t('lang.page.setting.summary.password') }}</summary>
-        <div class="form-item">
-          <label for="password">{{ $t('lang.page.setting.label.password-now') }}</label>
-          <input type="password" name="password" v-model="state.info.password.origin" />
-        </div>
-        <div class="form-item">
-          <label for="lang">{{ $t('lang.page.setting.label.password-new') }}</label>
-          <input type="password" name="password-new" v-model="state.info.password.current" />
-        </div>
-        <div class="form-item">
-          <label for="lang">{{ $t('lang.page.setting.label.password-confirm') }}</label>
-          <input type="password" name="password-confirm" v-model="state.info.password.confirm" />
-        </div>
-        <div class="form-item">
-          <el-popconfirm :title="$t('lang.confirm.update')" @confirm="onUpdatePassword">
-            <template #reference>
-              <button class="submit">{{ $t('lang.submit.update') }}</button>
-            </template>
-          </el-popconfirm>
-        </div>
-      </details>
-    </div>
-    <div class="form">
-      <details>
-        <summary>{{ $t('lang.page.setting.summary.token') }}</summary>
-        <div class="form-item">
-          <input type="text" readonly name="token" v-model="state.info.user.token" />
-        </div>
-        <div class="form-item">
-          <el-popconfirm :title="$t('lang.confirm.update')" @confirm="onTokenRefresh">
-            <template #reference>
-              <button class="submit">{{ $t('lang.submit.update') }}</button>
-            </template>
-          </el-popconfirm>
-          <el-popconfirm title="确定删除吗？" @confirm="onTokenDel">
-            <template #reference>
-              <button class="submit danger">{{ $t('lang.submit.delete') }}</button>
-            </template>
-          </el-popconfirm>
-        </div>
-      </details>
-    </div>
-    <div class="form">
-      <details open>
         <summary>{{ $t('lang.page.setting.summary.env') }}</summary>
         <div class="form-item">
           <label for="password">{{ $t('lang.page.setting.label.base-url') }}</label>
@@ -109,7 +127,7 @@ import { userTokenRefresh } from '@/api';
 import { userPasswordUpdate } from '@/api';
 import { PopTip } from '@/utils/tip';
 import store from '@/store';
-import {  useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { getCookie, setCookie } from '@/utils/cookieJar';
 import langSwitch from '@/components/lang-switch.vue';
 import { useI18n } from 'vue-i18n';
@@ -124,6 +142,7 @@ const state = reactive({
       theme: '',
       admin: false,
       token: '',
+      wbaas: '',
       theme: getCookie('markless-theme') || 'normal',
     },
     env: {

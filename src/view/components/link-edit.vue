@@ -21,6 +21,10 @@
             <el-switch v-model="state.link.read"></el-switch>
           </div>
           <div class="form-item">
+            <label for="read">{{ $t('lang.page.link-edit.label.wbaas') }}</label>
+            <el-switch v-model="state.link.wbaas"></el-switch>
+          </div>
+          <div class="form-item">
             <el-popconfirm :title="$t('lang.confirm.update')" @confirm="onUpdateInfo">
               <template #reference>
                 <button class="submit" :disabled="btnActive">{{ $t('lang.submit.update') }}</button>
@@ -82,6 +86,7 @@ const state = reactive({
     desc: '',
     tags: '',
     read: false,
+    wbaas: false,
   },
   tags: [],
   selectedTags: [],
@@ -127,13 +132,7 @@ function loadLink() {
 }
 
 function onUpdateInfo() {
-  linkUpdate({
-    id: state.link.id,
-    url: state.link.url,
-    title: state.link.title,
-    desc: state.link.desc,
-    read: state.link.read,
-  })
+  linkUpdate(state.link)
     .then(res => {
       if (res.data) {
         const { status, msg } = res.data;

@@ -50,16 +50,11 @@ export function linkUnread({ id }) {
     method: 'get',
   });
 }
-export function linkAdd({ url, tags, read, desc }) {
+export function linkAdd(data) {
   return request({
     url: `/api/link/add`,
     method: 'post',
-    data: {
-      url,
-      tags,
-      read,
-      desc,
-    },
+    data
   });
 }
 

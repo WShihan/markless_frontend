@@ -53,8 +53,9 @@ import { linkOne } from '@/api';
 import { linkUpdateArchive } from '@/api';
 import { PopTip } from '@/utils/tip';
 import { onBeforeMount } from 'vue';
-import {  useRoute } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+import { cleanHtml } from '@/utils/tool';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -105,7 +106,7 @@ function onUpdateInfo() {
         if (status) {
           PopTip.success(t('lang.message.success.update'));
           loadLink();
-        } else throw  msg;
+        } else throw msg;
       } else throw t('lang.message.failed.update');
     })
     .catch(err => {
@@ -115,6 +116,4 @@ function onUpdateInfo() {
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>
