@@ -36,7 +36,7 @@ export const lang = {
         tag: '標籤',
       },
       summary: '其他選項',
-      placeholder: '請選擇標籤',
+      placeholder: '請選擇已有標籤或者輸入新標籤',
     },
     'link-edit': {
       label: {

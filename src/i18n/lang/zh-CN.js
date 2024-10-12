@@ -34,10 +34,10 @@ export const lang = {
         desc: '描述',
         read: '已阅',
         tag: '标签',
-        wbaas: '浏览器获取',
+        wbaas: '代理',
       },
       summary: '其他选项',
-      placeholder: '请选择标签',
+      placeholder: '请选择已有标签或者输入新标签',
     },
     'link-edit': {
       label: {
@@ -46,7 +46,7 @@ export const lang = {
         desc: '描述',
         read: '已阅',
         tag: '标签',
-        wbaas: '浏览器获取',
+        wbaas: '代理',
       },
       summary: {
         info: '书签信息',
@@ -88,7 +88,7 @@ export const lang = {
         version: '版本',
         'git-id': 'Git提交ID',
         'build-time': '构建时间',
-        wbaas: "浏览器密钥",
+        wbaas: "代理密钥",
         'lang-opt': {
           en: '英文',
           'zh-TW': '中文繁体',
@@ -103,9 +103,12 @@ export const lang = {
         user: '用户',
         'user-info': '信息',
         password: '修改密码',
-        token: '密钥',
+        token: '用户密钥 用于接口访问',
         env: '应用信息',
       },
+      placeholder:{
+        wbaas: '用于代理浏览器服务抓取部分反爬页面内容，前往https://phantomjscloud.com获取'
+      }
     },
     login: {
       label: {

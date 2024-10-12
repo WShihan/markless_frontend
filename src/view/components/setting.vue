@@ -12,7 +12,7 @@
             </div>
             <div class="form-item">
               <label for="username">{{ $t('lang.page.setting.label.wbaas') }}</label>
-              <input type="text"  v-model="state.info.user.wbaas"  placeholder="phantomjscloud key"/>
+              <input type="text"  v-model="state.info.user.wbaas"  :placeholder="$t('lang.page.setting.placeholder.wbaas')"/>
             </div>
             <div class="form-item" v-if="state.info.user.admin">
               <label for="username">{{ $t('lang.page.setting.label.admin') }}</label>

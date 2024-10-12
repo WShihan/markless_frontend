@@ -87,6 +87,9 @@ details {
   margin: 1em 0em;
   gap: .5em;
   label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-width: 5em;
   }
   details {
@@ -126,17 +129,19 @@ textarea {
   display: block;
   max-width: 100%;
   outline: none;
-  padding: 0.5em;
-  border: 1.5px solid $--base-color;
+  padding: 0.7em;
   border-radius: 5px;
   appearance: none;
   color: $--font-color;
-  border: 1.5px solid var(--base-color);
+  border: 1px solid var(--gap-color);
   background: var(--input-bg-color);
   background-image: none;
 }
 input,
 textarea {
+  &:focus-visible{
+    border-color: var(--base-color);
+  }
   &.disable {
     border: none !important;
   }

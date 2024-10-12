@@ -36,7 +36,7 @@ export const lang = {
         tag: 'Tag',
       },
       summary: 'Other Options',
-      placeholder: 'Please select a tag',
+      placeholder: 'Please select existed tag or type new tag',
     },
     'link-edit': {
       label: {
