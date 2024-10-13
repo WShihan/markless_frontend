@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --mode development",
+    "serve": "vue-cli-service serve",
     "serve:prod": "vue-cli-service serve --mode production",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "build": "vue-cli-service build --mode production",
+    "build": "vue-cli-service build",
     "build:prod": "vue-cli-service build --mode production",
     "build:dev": "vue-cli-service build --mode development",
     "analyzer": "set analyzer=true && vue-cli-service build "
