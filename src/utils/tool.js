@@ -1,5 +1,4 @@
 import { dayjs } from 'element-plus';
-import DOMPurify from 'dompurify';
 
 
 /**
@@ -68,7 +67,3 @@ export function parseDate(dt) {
 
 
 
-
-export function cleanHtml(html) {
-  return DOMPurify.sanitize('<b>hello there</b>');
-}
