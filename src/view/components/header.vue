@@ -1,22 +1,25 @@
 <template>
   <div class="header">
-    <div class="icon" @click="() => $router.push('/')" title="首页">
-      <svg
-        t="1727296045975"
-        class="icon"
-        viewBox="0 0 1024 1024"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        p-id="1132"
-        width="200"
-        height="200"
-      >
-        <path
-          d="M791.272727 89.041455C791.272727 0 698.181818 0 698.181818 0L325.818182 0c0 0-93.090909 0-93.090909 89.041455L232.727273 1024l279.272727-267.124364L791.272727 1024 791.272727 89.041455z"
-          p-id="1133"
-          fill="#1296db"
-        ></path>
-      </svg>
+    <div class="icon">
+      <a @click="() => $router.push('/')" title="首页">
+        <svg
+          t="1727296045975"
+          class="icon"
+          viewBox="0 0 1024 1024"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          p-id="1132"
+          width="200"
+          height="200"
+        >
+          <path
+            d="M791.272727 89.041455C791.272727 0 698.181818 0 698.181818 0L325.818182 0c0 0-93.090909 0-93.090909 89.041455L232.727273 1024l279.272727-267.124364L791.272727 1024 791.272727 89.041455z"
+            p-id="1133"
+            fill="#1296db"
+          ></path>
+        </svg>
+      </a>
+      <span class="username">{{ username }}</span>
     </div>
     <div class="navs">
       <ul>
@@ -51,10 +54,12 @@ const props = defineProps({
     },
   },
 });
+let username = computed(() => store.$state.username);
 
-const tName = computed(() => {
+let tName = computed(() => {
   return router.currentRoute.value.name;
 });
+
 function logout() {
   store.removeToken();
 }
@@ -73,6 +78,7 @@ function initialTheme() {
   const body = document.body;
   body.classList.add(theme);
 }
+
 initialTheme();
 </script>
 
@@ -93,7 +99,7 @@ initialTheme();
       li {
         list-style: none;
         button {
-          font-size: 1.2em; 
+          font-size: 1.2em;
           padding: 0.2em;
           appearance: none;
           outline: none;

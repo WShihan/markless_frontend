@@ -146,7 +146,7 @@ function onLoadTags() {
     })
     .catch(err => {
       PopTip.error(err);
-      console.log(err);
+      console.error(err);
     });
 }
 
@@ -184,7 +184,7 @@ function onAddTag() {
     })
     .catch(err => {
       PopTip.error(err);
-      console.log(err);
+      console.error(err);
     })
     .finally(() => (state.loading.add = false));
 }

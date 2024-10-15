@@ -37,8 +37,6 @@ request.interceptors.response.use(
         case 401:
         case 403:
         case 422:
-          console.log(curPath);
-          console.log(route);
           if (curPath !== '/login') {
             router.push({ path: '/login', query: { redirect: curPath } });
           }

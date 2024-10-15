@@ -9,8 +9,8 @@ export const createStore = defineStore('publicStore', {
     token: getCookie(TOKENKEY),
     lang: getCookie('markless-lang'),
     theme: getCookie('markless-theme'),
+    username: getCookie('markless-username'),
   }),
-  getters: {},
   actions: {
     setToken(token) {
       setCookie(TOKENKEY, token);
@@ -41,6 +41,13 @@ export const createStore = defineStore('publicStore', {
     getTheme() {
       return this.theme;
     },
+    setSearchOpt(opt){
+      Object.assign(state.searchOpt, opt);
+    },
+    setUsername(username){
+      setCookie('markless-username', username);
+      this.username = username;
+    }
   },
 });
 export const store = createStore(pinia);

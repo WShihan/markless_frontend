@@ -34,7 +34,7 @@
         </details>
       </div>
       <div class="form-item tags">
-        <details>
+        <details open>
           <summary>{{ $t('lang.page.link-edit.summary.tag') }}</summary>
           <div class="form-item">
             <label>{{ $t('lang.page.link-edit.label.tag') }}</label>
@@ -161,7 +161,7 @@ function onUpdateTags() {
       } else throw t('lang.page.link-edit.tip.link-tag-update-failed');
     })
     .catch(err => {
-      console.log(err);
+      console.error(err);
       PopTip.warning(err);
     });
 }

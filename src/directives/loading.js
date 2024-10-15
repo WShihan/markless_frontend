@@ -6,7 +6,6 @@ const loadDirective = {};
 loadDirective.install = Vue => {
   // 挂载
   const append = el => {
-    console.log('install loading directive')
     el.style.position = 'relative';
     el.appendChild(el.instance.$el); // el.instance.$el => Loading组件组件对应的dom对象  => 挂载到el(Loading组件作用的对应dom上)
   };

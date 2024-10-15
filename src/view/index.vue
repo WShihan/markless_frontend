@@ -3,15 +3,19 @@
     <Header />
     <TagDock />
     <router-view v-slot="{ Component }">
-      <keep-alive v-if="$route.meta.keepAlive">
-        <Transition name="fade">
-          <component :is="Component" :key="$route.name" />
-        </Transition>
+      <keep-alive>
+        <component
+          :is="Component"
+          v-if="$route.meta.cache"
+          :key="$route.path"
+        />
       </keep-alive>
-      <Transition name="fade" v-else>
-        <component :is="Component" :key="$route.name" />
-      </Transition>
     </router-view>
+ 
+    <router-view v-slot="{ Component }">
+      <component :is="Component" v-if="!$route.meta.cache" :key="$route.path" />
+    </router-view>
+
   </div>
 </template>
 

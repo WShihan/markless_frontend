@@ -59,7 +59,7 @@ export const lang = {
         'link-info-update-failed': '更新书签信息失败',
         'link-info-update-success': '更新书签信息成功',
         'link-tag-update-failed': '更新标签失败',
-        'link-tag-update-success': '更新标签失败',
+        'link-tag-update-success': '更新标签成功',
       },
     },
     'link-archive': {

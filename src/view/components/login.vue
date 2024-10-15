@@ -67,15 +67,12 @@ function validatePassword() {
   } else return true;
 }
 
-function clear() {
-  state.loginForm.username = '';
-  state.loginForm.password = '';
-}
 function onKeyup(e) {
   if (e.key === 'Enter') {
     handleLogin();
   }
 }
+
 function handleLogin() {
   if (validatePassword() && validateUsername()) {
     state.loading = true;
@@ -86,6 +83,7 @@ function handleLogin() {
           tokenStore.setToken(data['access_token']);
           setCookie('markless-lang', data.lang);
           setCookie('markless-theme', data.theme);
+          setCookie('markless-username', data.username);
           router.push({
             path: route.query.redirect || '/',
           });

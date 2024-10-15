@@ -40,6 +40,7 @@
       />
     </div>
     <Pager
+      v-if="pagerVisible"
       @next="
         () => {
           state.search.page++;
@@ -60,6 +61,7 @@
 import { reactive } from 'vue';
 import { onBeforeMount } from 'vue';
 import { watch } from 'vue';
+import { computed } from 'vue';
 import { linkPagination } from '@/api/index';
 import { markReadState } from '@/api/index';
 import Pager from '@/view/components/link-all/components/pager.vue';
@@ -67,7 +69,7 @@ import Link from '@/view/components/link-all/components/link.vue';
 import SearchOpt from '@/view/components/link-all/components/search.vue';
 import { PopTip } from '@/utils/tip';
 import { useI18n } from 'vue-i18n';
-import {  useRoute, useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
 const router = useRouter();
@@ -91,16 +93,15 @@ watch(
   }
 );
 
-watch(
-  () => state.search,
-  () => {
-    router.push({query: {keyword: state.search.keyword, read: state.search.read}});
+watch (
+  () => [state.search.page, state.search.read],
+  () =>{
+    router.push({ query: { keyword: state.search.keyword, read: state.search.read } });
     loadLinks();
-  },
-  {
-    deep: true,
   }
-);
+)
+
+const pagerVisible = computed(() => state.search.count > state.search.size);
 
 onBeforeMount(() => {
   loadLinks();
@@ -123,7 +124,7 @@ function loadLinks() {
       state.search.page = search.page;
     })
     .catch(err => {
-      console.log(err);
+      console.error(err);
     })
     .finally(() => (state.loading = false));
 }

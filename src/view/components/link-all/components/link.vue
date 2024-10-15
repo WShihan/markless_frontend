@@ -229,7 +229,7 @@ import { linkRead } from '@/api';
 import { linkUnread } from '@/api';
 import { PopTip } from '@/utils/tip';
 import { parseDate } from '@/utils/tool';
-import {  useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 import { useI18n } from 'vue-i18n';
 const router = useRouter();
@@ -248,9 +248,7 @@ const emit = defineEmits(['edit', 'delete', 'copy', 'archive', 'read', 'unread',
 function viewLink(evt) {
   emit('view', props.link);
   linkRead({ id: props.link.id })
-    .then(res => {
-      console.log(res.data);
-    })
+    .then(res => {})
     .finally(() => {
       emit('read', props.link);
       window.open(props.link.url);
@@ -291,10 +289,8 @@ function unreadLink() {
     if (status) {
       emit('unread', props.link);
       PopTip.success(t('lang.link.label.unread') + t('lang.message.success.common'));
-
     } else {
       PopTip.info(t('lang.link.label.unread') + t('lang.message.error.common'));
-
     }
   });
   emit('unread', props.link);
